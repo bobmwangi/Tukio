@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_bold"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/venueName"
+        android:gravity="center"
+        android:textStyle="normal|bold"
+        android:textSize="22sp"
+        android:textColor="#f00"
+        android:lineSpacingExtra="3dp"
+        android:layout_alignParentTop="true"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/kickoImgDialog"
+        android:src="@drawable/fire_kicko_white"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
+
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+
+        android:id="@+id/kickobarTV"
+        android:textColor="#666"
+        android:textStyle="normal"
+        android:padding="15dp"
+        android:textSize="17sp"
+        android:layout_alignParentTop="true" />
+    <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_reg"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/venueDescriprion"
+        android:textColor="#000"
+        android:textStyle="normal"
+        android:textSize="18sp"
+        android:lineSpacingExtra="3dp"
+        android:layout_alignParentTop="true"
+        android:padding="20dp" />
+
+    <!--    <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/stop"
+            android:id="@+id/image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="ContentDescription,RtlHardcoded" />-->
+
+    <Button
+        android:id="@+id/dialogButtonOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View more"
+android:textAllCaps="false"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="18sp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+</LinearLayout>

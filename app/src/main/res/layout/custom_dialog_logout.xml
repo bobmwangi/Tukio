@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_bold"
+        android:id="@+id/textView"
+        android:textColor="#000"
+        android:textSize="21dp"
+        android:layout_width="match_parent"
+        android:paddingTop="15dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Confirm logout" />
+    <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_reg"
+        android:id="@+id/textViewT"
+        android:textColor="#666"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:lineSpacingExtra="3dp"
+        android:gravity="left"
+        android:layout_height="wrap_content"
+        android:text="This will only log you out of this device but will not delete your account with Tukio.\nYou can always come back!" />
+   <!-- <Button
+        android:id="@+id/dialogButtonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="18sp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />-->
+
+
+</LinearLayout>

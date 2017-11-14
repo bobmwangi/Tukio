@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android=
+    "http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_events_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="3dp"
+    android:background="#fff"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ke.co.tukio.tukio.EventsDetailsActivity"
+    tools:showIn="@layout/activity_scrolling_single_event">
+    <!--tools:showIn="@layout/activity_events_details">-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+
+<ImageView
+    android:layout_width="match_parent"
+    android:id="@+id/eventImage"
+    android:adjustViewBounds="true"
+    android:layout_height="wrap_content" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:id="@+id/eventName"
+            android:typeface="normal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textColor="#f00" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_action_place"
+            android:id="@+id/eventVenue"
+            android:typeface="normal"
+            android:gravity="center"
+            android:textColor="#000" />
+
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:weightSum="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="22dp"
+                android:src="@drawable/ic_action_place"
+                android:layout_height="22dp" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+
+                android:layout_marginLeft="10sp"
+
+                android:text="Nanyuki"
+                android:id="@+id/eventVenue"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:textColor="#000" />
+        </LinearLayout>-->
+        <RelativeLayout
+            android:id="@+id/rl2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="@color/black"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="About the event"
+                android:textSize="12dp"
+                android:textColor="#fff"
+                android:background="@drawable/venue_sections_tv"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+        </RelativeLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+       <!-- <GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gl"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:rowCount="2"
+            android:columnCount="5">
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:text="Date"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/eventDate"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_gravity="center"
+                android:textColor="#464646"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:text="Time"
+                android:textColor="#0084fd"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/time_display"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:textColor="#0084fd"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:text="Age"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/age_display"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_gravity="center"
+                android:textColor="@color/red"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_row="0"
+                android:layout_column="3"
+                android:text="Tickets"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/tickets_display"
+                android:layout_row="1"
+                android:layout_column="3"
+                android:layout_gravity="center"
+                android:textColor="#464646"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_row="0"
+                android:layout_column="4"
+                android:text="Seen by"
+                android:textColor="#057d07"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/eventViews"
+                android:layout_row="1"
+                android:layout_column="4"
+                android:layout_gravity="center"
+                android:textColor="#057d07"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+        </GridLayout>-->
+
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            android:layout_centerHorizontal="true"
+            android:columnCount="5">
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+            android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Date"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time"
+                android:gravity="center"
+                android:textColor="#0084fd"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Age"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tickets"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Seen by"
+                android:textColor="#057d07"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:padding="5dp" />
+
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            android:layout_centerHorizontal="true"
+            android:columnCount="5">
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/eventDate"
+              android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#464646"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/time_display"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#0084fd"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/age_display"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/red"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/tickets_display"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#464646"
+                android:textStyle="normal"
+                android:textSize="14dp"
+                android:padding="10dp" />
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:id="@+id/eventViews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#057d07"
+                android:textStyle="normal"
+                android:textSize="15dp"
+                android:padding="10dp" />
+
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textSize="17sp"
+
+            android:id="@+id/eventDesc"
+            android:lineSpacingExtra="3dp"
+            android:typeface="normal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textColor="#000" />
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:weightSum="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="22dp"
+            android:src="@drawable/ic_action_date"
+            android:layout_height="22dp" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="10sp"
+            android:id="@+id/eventDate"
+            android:lineSpacingExtra="3dp"
+            android:typeface="normal"
+            android:gravity="left"
+            android:textColor="#5AB9EF" />
+        </LinearLayout>-->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+       <!-- <Button
+            android:layout_width="wrap_content"
+            android:onClick="viewOnMap"
+            android:id="@+id/viewOnMap"
+
+            android:layout_gravity="center"
+            android:background="@drawable/buttonbg"
+            android:textSize="14dp"
+            android:textColor="#5ab9ef"
+            android:textAllCaps="false"
+            android:text="View this place"
+            android:layout_height="wrap_content" />-->
+
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingLeft="15dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="22dp"
+                android:src="@drawable/ic_action_views"
+                android:layout_height="22dp" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:layout_marginLeft="10sp"
+                android:id="@+id/eventViews"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="left"
+                android:textColor="#000" />
+        </LinearLayout>-->
+
+<Space
+    android:layout_width="match_parent"
+    android:layout_height="20dp" />
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="@color/black"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Photos of the venue"
+                android:textSize="12dp"
+                android:textColor="#fff"
+                android:background="@drawable/venue_sections_tv"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+        </RelativeLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingLeft="15dp"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:onClick="addToCalendar"
+                android:id="@+id/reminderIcon"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/reminder"
+                android:layout_height="wrap_content" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="addToCalendar"
+                android:clickable="true"
+                android:text="Add to reminder"
+                android:layout_gravity="center_vertical"
+                android:textSize="17sp"
+                android:layout_marginLeft="10sp"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="left"
+                android:textColor="#000" />
+        </LinearLayout>-->
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+    </LinearLayout>
+    </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>

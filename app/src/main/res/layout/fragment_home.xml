@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:paddingTop="3dp"
+
+    tools:context="ke.co.tukio.tukio.HomeFragment">
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/swipyrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srl_direction="top">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+
+        android:id="@+id/noFavTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="50dp"
+        android:text="You've not selected any favourite venues.\nYou can select one from the map"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:visibility="gone"
+        app:custom_typeface="@string/font_segoue_bold" />
+    <!-- <com.thebrownarrow.customfont.CustomFontTextView
+         app:custom_typeface="@string/font_segoue_bold"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:text="Build a feed"
+         android:gravity="center"
+         android:id="@+id/buildafeed"
+         android:textColor="#000"
+         android:layout_marginBottom="5dp"
+         android:layout_marginTop="70dp"
+         android:textSize="24sp"/>
+     <ImageView
+         android:layout_width="100dp"
+         android:id="@+id/buildafeedimg"
+         android:adjustViewBounds="true"
+         android:layout_gravity="center"
+         android:src="@drawable/addnews_four"
+         android:layout_height="100dp" />
+     <com.thebrownarrow.customfont.CustomFontTextView
+         app:custom_typeface="@string/font_segoue_reg"
+         android:paddingTop="10dp"
+         android:textColor="#666"
+         android:id="@+id/buildafeedtext"
+         android:layout_width="match_parent"
+         android:gravity="center"
+         android:layout_marginBottom="15dp"
+         android:layout_height="wrap_content"
+         android:text="Get a customized events-feed by selecting your favourite venues"
+         android:textSize="17sp"/>
+     <com.thebrownarrow.customfont.CustomFontTextView
+         app:custom_typeface="@string/font_segoue_reg"
+         android:paddingTop="10dp"
+         android:id="@+id/Checktext"
+         android:textColor="#000"
+         android:layout_width="match_parent"
+         android:gravity="center"
+         android:layout_marginBottom="15dp"
+         android:layout_height="wrap_content"
+         android:textSize="17sp"/>
+     <Button
+         android:id="@+id/buildafeedbtn"
+
+ android:textColor="#fff"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:onClick="setFeed"
+         android:background="@drawable/ripple_effect"
+         android:paddingRight="10dp"
+         android:paddingLeft="10dp"
+         android:textSize="15sp"
+
+         android:layout_gravity="center"
+         android:text="Get started" />-->
+
+
+    <!--android:background="#5ab9ef"-->
+
+</LinearLayout>

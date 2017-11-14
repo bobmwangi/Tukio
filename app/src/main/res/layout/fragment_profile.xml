@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="ke.co.tukio.tukio.ProfileFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:id="@+id/firstLetter"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_corner"
+                android:clickable="true"
+                android:gravity="center"
+                android:textColor="#fff"
+                android:textSize="50sp"
+                android:textStyle="normal|bold"
+                app:custom_typeface="@string/font_segoue_bold" />
+            <ImageButton
+                android:id="@+id/profImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@null" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="#5ab9ef"
+                android:textSize="25sp"
+                app:custom_typeface="@string/font_segoue_bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <!--<com.thebrownarrow.customfont.CustomFontTextView-->
+                <!--app:custom_typeface="@string/font_segoue_bold"-->
+
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="My Favourites"-->
+                <!--android:textColor="#000"-->
+                <!--android:onClick="favourites"-->
+                <!--android:clickable="true"-->
+                <!--android:textStyle="bold"-->
+
+                <!--android:textSize="21sp"-->
+                <!--android:padding="8dp"/>-->
+
+                <!-- <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal">
+                   &lt;!&ndash;  <ImageView
+                         android:layout_gravity="center_vertical"
+                         android:layout_width="wrap_content"
+                         android:onClick="favourites"
+                         android:padding="10dp"
+                         android:clickable="true"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/ic_action_favourite" />
+&ndash;&gt;
+                     <com.thebrownarrow.customfont.CustomFontTextView
+                         app:custom_typeface="@string/font_segoue_reg"
+
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:paddingLeft="15dp"
+                         android:paddingBottom="8dp"
+                         android:textSize="15sp"
+                         android:lineSpacingExtra="3dp"
+                         android:typeface="normal"
+                         android:gravity="center_vertical"
+                         android:onClick="favourites"
+                         android:clickable="true"
+                         android:text="Events you've shown interest in"
+                         android:textColor="#5ab9ef"
+                        />
+                 </LinearLayout>-->
+
+
+            </LinearLayout>
+            <!--<Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="15dp" />-->
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:background="#a6a5a5"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_height="1dp"/>-->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.thebrownarrow.customfont.CustomFontTextView
+                    android:id="@+id/reminderTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="reminders"
+                    android:padding="8dp"
+                    android:textColor="#000"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:typeface="normal"
+                    app:custom_typeface="@string/font_segoue_bold" />
+
+            </LinearLayout>
+            <!-- <Space
+                 android:layout_width="match_parent"
+                 android:layout_height="15dp" />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_marginLeft="6dp"
+                 android:background="#a6a5a5"
+                 android:layout_gravity="center"
+                 android:layout_height="1dp"/>
+             <Space
+                 android:layout_width="match_parent"
+                 android:layout_height="15dp" />
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:orientation="vertical"
+                     android:layout_height="match_parent">
+
+
+                     <com.thebrownarrow.customfont.CustomFontTextView
+                         app:custom_typeface="@string/font_segoue_bold"
+
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:text="Promote event"
+                         android:textColor="#000"
+                         android:onClick="promote"
+                         android:clickable="true"
+                         android:textStyle="bold"
+                         android:textSize="21sp"
+                         android:padding="8dp"
+                         android:typeface="normal" />
+
+
+
+
+                 </LinearLayout>-->
+            <!--  <Space
+                  android:layout_width="match_parent"
+                  android:layout_height="15dp" />
+              <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/ca5"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp">
+
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:layout_height="match_parent">
+
+
+                      <TextView
+
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:text="Become a partner"
+                          android:paddingLeft="4dp"
+                          android:textColor="#000"
+                          android:onClick="register"
+                          android:clickable="true"
+                          android:textStyle="bold"
+                          android:textSize="17sp"
+                          android:padding="8dp"
+                          android:typeface="normal" />
+
+                      <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal">
+                          <ImageView
+                              android:layout_gravity="center_vertical"
+                              android:layout_width="wrap_content"
+                              android:onClick="register"
+                              android:padding="10dp"
+                              android:clickable="true"
+                              android:layout_height="wrap_content"
+                              android:src="@drawable/ic_promote" />
+
+                          <TextView
+
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:typeface="normal"
+                              android:gravity="center_vertical"
+                              android:onClick="register"
+                              android:clickable="true"
+                              android:text="Register as a club manager"
+                              android:textColor="#666"
+                              android:textSize="17sp" />
+                      </LinearLayout>
+
+
+                  </LinearLayout>
+              </android.support.v7.widget.CardView>-->
+            <!--   <Space
+                   android:layout_width="match_parent"
+                   android:layout_height="15dp" />
+               <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:id="@+id/caasferg5"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="8dp">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:orientation="vertical"
+                       android:layout_height="match_parent">
+
+
+                  <TextView
+
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="Support"
+                           android:paddingLeft="4dp"
+                           android:textColor="#000"
+                           android:onClick="support"
+                           android:clickable="true"
+                           android:textStyle="bold"
+                           android:textSize="17sp"
+                           android:padding="8dp"
+                           android:typeface="normal" />
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="horizontal">
+                           <ImageView
+                               android:layout_gravity="center_vertical"
+                               android:layout_width="wrap_content"
+                               android:onClick="support"
+                               android:padding="10dp"
+                               android:clickable="true"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/ic_feedback" />
+
+                           <TextView
+
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:typeface="normal"
+                               android:gravity="center_vertical"
+                               android:onClick="support"
+                               android:clickable="true"
+                               android:text="Feedback and support"
+                               android:textColor="#5ab9ef"
+                               android:textSize="17sp" />
+                       </LinearLayout>
+
+
+                   </LinearLayout>
+               </android.support.v7.widget.CardView>
+              -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:background="#a6a5a5"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_height="1dp"/>-->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.thebrownarrow.customfont.CustomFontTextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="about"
+                    android:padding="8dp"
+                    android:text="About and support"
+                    android:textColor="#000"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:typeface="normal"
+                    app:custom_typeface="@string/font_segoue_bold" />
+
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:background="#a6a5a5"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_height="1dp"/>-->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.thebrownarrow.customfont.CustomFontTextView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="share"
+                    android:padding="8dp"
+                    android:text="Share App"
+                    android:textColor="#000"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:typeface="normal"
+                    app:custom_typeface="@string/font_segoue_bold" />
+
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <ImageView
+                android:id="@+id/qrImg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@null" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:padding="5dp"
+                android:text="Your account's QR code"
+                android:textColor="#666"
+                android:textSize="16sp"
+                app:custom_typeface="@string/font_segoue_reg" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="App Version v1.0"
+                android:textColor="#5ab9ef"
+                android:textSize="16sp"
+                app:custom_typeface="@string/font_segoue_reg" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:onClick="logout"
+                android:text="LOGOUT"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:custom_typeface="@string/font_segoue_bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

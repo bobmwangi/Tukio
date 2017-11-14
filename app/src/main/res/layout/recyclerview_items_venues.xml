@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+
+    <!--id wont be visible-->
+    <TextView
+        android:id="@+id/tvVID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+
+        <ImageView
+            android:id="@+id/imgVen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fire_white_venue" />
+
+
+        <TextView
+            android:id="@+id/tvVName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgVen"
+            android:gravity="top"
+
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:textColor="#43b6f4"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <!-- <ImageView
+             android:layout_gravity="center_vertical"
+             android:layout_width="20dp"
+             android:src="@drawable/ic_action_date_white"
+             android:layout_height="20dp" />-->
+        <TextView
+            android:id="@+id/tvVLoc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvVName"
+
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imgVen"
+            android:gravity="start"
+
+            android:textColor="#fff"
+            android:textSize="17sp" />
+        <!--    <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:src="@drawable/ic_action_views_white"
+                android:layout_height="20dp" />-->
+
+        <Space
+            android:id="@+id/sp"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_below="@+id/tvVLoc" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_below="@+id/sp"
+            android:background="#fff" />
+    </RelativeLayout>
+
+
+</FrameLayout>
+

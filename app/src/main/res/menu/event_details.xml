@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ke.co.tukio.tukio.EventsDetailsActivity">
+    <item
+        android:id="@+id/viewVenue"
+        android:icon="@drawable/ic_action_venue_white_menu"
+        android:title="View Venue"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/addToFavourite"
+        android:icon="@drawable/ic_action_fav_white"
+        android:title="Favourite this"
+        app:showAsAction="always" />
+
+
+</menu>
+
+
+
+

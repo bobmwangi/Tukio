@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "24.0.0"
+    defaultConfig {
+        applicationId "ke.co.tukio.tukio"
+        minSdkVersion 15  //adjusted from 14-15 when adding the lib: A simple Cache (8-102017)
+        targetSdkVersion 22  //was 24 prev
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true   //24-09-17
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //remove - 03-11-2017
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+
+    }
+}
+
+dependencies {
+//    compile fileTree(dir: 'libs', include: ['*.jar']) //removed on 9th Oct, 2017 A problem of duplicate. Unchecked 2 options at instarun
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // 26-06-2017 - material design
+//    compile 'com.android.support:appcompat-v7:24.2.1'
+
+    //bottom nav
+
+    //http apache legacy library
+    compile files('libs/org.apache.http.legacy.jar')
+
+    //    compile 'com.android.support:appcompat-v7:24.2.1'
+    //    compile 'com.android.support:design:24.2.1'
+    //    compile 'com.android.support:cardview-v7:24.2.1'
+    //    compile 'com.android.support:support-v4:24.2.1'
+
+    //recycler
+
+    // removed on 24-09-17 only include those which you need
+//    compile 'com.google.android.gms:play-services-maps:9.6.1'
+//    compile 'com.google.android.gms:play-services-plus:8.1.0'
+    //end googld gms services
+
+    //firebase Google sign in 20th Sept, 2017
+    //fonts
+
+    //upslider
+
+    //rangeSlider
+
+    //ObjectCache - github 8-Oct, 2017
+//    compile 'com.iainconnor:objectcache:0.0.18-SNAPSHOT'
+
+    //A simple cache
+
+    //swipeable pictures
+
+    //gif
+//    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+
+    //glide
+
+    //style map
+
+    //multidex for Kingara - Android<5.0
+    compile 'com.android.support:multidex:1.0.1'
+
+    //bottomsheet
+    compile 'com.cocosw:bottomsheet:1.+@aar'
+
+    //ripple effect - didnt work
+//    compile 'com.github.traex.rippleeffect:library:1.2.3'
+
+    //pull to refresh
+//    compile 'com.github.omadahealth:swipy:1.2.3@aar'
+    compile 'com.github.orangegangsters:swipy:1.2.3@aar'
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.google.firebase:firebase-messaging:9.6.1'
+    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.github.TheBrownArrow:CustomTypeface:1.0.3'
+    compile 'com.sothree.slidinguppanel:library:3.2.1'
+    compile 'com.github.channguyen:rsv:1.0.1'
+    compile 'org.afinal.simplecache:a-simple-cache:1.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.github.jineshfrancs:ThemedGoogleMap:1.0'
+    testCompile 'junit:junit:4.12'
+}
+apply plugin: 'com.google.gms.google-services'

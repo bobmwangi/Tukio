@@ -1,0 +1,192 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:rsv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="ke.co.tukio.tukio.KickoFragment">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/venueImg"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        />
+<!--    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/privee"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_height="match_parent" />-->
+    <ScrollView
+        android:id="@+id/myScrolllView"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+        <!--android:background="#89000000"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="36dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textStyle="normal|bold"
+        android:textColor="#f00"
+        android:text="Kick o' bar" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:textSize="17sp"
+android:id="@+id/searchMessage"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:textColor="#000"
+                />
+            <ImageView
+                android:layout_width="180sp"
+                android:id="@+id/kickimg"
+                android:src="@drawable/kickobar_fire"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+            <com.github.channguyen.rsv.RangeSliderView
+                android:id="@+id/rsv_small"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                rsv:filledColor="#1A5F77"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:id="@+id/aboutKicko"
+                android:background="@null"
+                android:layout_weight="0"
+                android:layout_marginLeft="5dp"
+                android:onClick="aboutKicko"
+                android:visibility="gone"
+                android:src="@drawable/ic_action_about"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                />
+            </LinearLayout>
+            <!--rsv:filledColor="#1A5F77"-->
+
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:textSize="15sp"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:textColor="#000"
+                android:id="@+id/kickMsg" />
+
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:textSize="15sp"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:onClick="TurnOnLoc"
+                android:clickable="true"
+                android:textColor="#000"
+                android:id="@+id/GPSMsg" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="15dp"
+                android:textSize="15sp"
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textColor="#fff"
+                android:id="@+id/locationLL" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_bold"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:textSize="17sp"
+
+                android:lineSpacingExtra="3dp"
+                android:typeface="normal"
+                android:gravity="center"
+                android:layout_marginBottom="30dp"
+                android:textColor="#fff"
+                android:id="@+id/distanceToTV" />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/placeID"
+                android:visibility="gone"
+                android:textColor="#fff"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/venueDistanceInKm"
+                android:visibility="gone"
+                android:textColor="#fff"
+                android:layout_height="match_parent" />
+            <Button
+                android:layout_width="wrap_content"
+                android:onClick="kicking"
+                android:id="@+id/kickingBtn"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center"
+                android:paddingRight="10dp"
+                android:background="#f00"
+                android:textSize="15dp"
+                android:textColor="#fff"
+                android:visibility="gone"
+                android:text="Kick this place"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
+
+
+</LinearLayout>

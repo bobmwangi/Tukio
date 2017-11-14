@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android=
+    "http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_events_details"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent"
+    android:paddingLeft="3dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ke.co.tukio.tukio.VenueDetailsActivity"
+    tools:showIn="@layout/activity_scrolling_single_venue">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+
+<!--<ImageView
+    android:layout_width="match_parent"
+    android:id="@+id/venueImage"
+    android:adjustViewBounds="true"
+    android:layout_height="wrap_content" />-->
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="24sp"
+            android:padding="5dp"
+            android:id="@+id/venueName"
+            android:textColor="#f00"
+            android:lineSpacingExtra="3dp"
+            android:typeface="normal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:drawableLeft="@drawable/ic_action_place"
+            android:id="@+id/venueLocation"
+            android:typeface="normal"
+            android:gravity="center"
+            android:textColor="#000" />
+    <!--        android:textColor="#f00" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textSize="17sp"
+            android:id="@+id/venueLocation"
+            android:lineSpacingExtra="3dp"
+            android:typeface="normal"
+            android:gravity="left"
+            android:layout_marginBottom="20dp"
+            android:textColor="#666" />-->
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:weightSum="1"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="22dp"
+            android:src="@drawable/ic_action_date"
+            android:layout_height="22dp" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+            android:textSize="17sp"
+            android:layout_marginLeft="10sp"
+            android:id="@+id/venueDate"
+            android:lineSpacingExtra="3dp"
+            android:typeface="normal"
+            android:gravity="left"
+            android:textColor="#000" />
+        </LinearLayout>-->
+       <!-- <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />-->
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="22dp"
+                android:src="@drawable/ic_action_place"
+                android:layout_height="22dp" />
+            <com.thebrownarrow.customfont.CustomFontTextView
+                app:custom_typeface="@string/font_segoue_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="17sp"
+                android:layout_marginLeft="10sp"
+                android:id="@+id/venueLocation"
+                android:lineSpacingExtra="3dp"
+
+                android:gravity="left"
+                android:textColor="#000" />
+        </LinearLayout>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/VenueId"
+            android:visibility="gone"
+            android:layout_height="match_parent" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+        <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="@color/black"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Photos of the venue"
+                android:textSize="12dp"
+                android:textColor="#fff"
+                android:background="@drawable/venue_sections_tv"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"/>
+
+        </RelativeLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+    </LinearLayout>
+   </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>

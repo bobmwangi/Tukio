@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fbf2f2f2">
+
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/VollyNetworkImageView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/qrcode" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+
+            android:id="@+id/tvEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#a2000000"
+            android:gravity="center_horizontal"
+            android:padding="13dp"
+            android:text="TSO Concert"
+
+            android:textColor="#ffffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_bold" />
+    </FrameLayout>
+
+    <!--04-11-2017-->
+    <!--  <com.android.volley.toolbox.NetworkImageView
+          android:id="@+id/VollyNetworkImageView1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:adjustViewBounds="true"
+          android:scaleType="fitCenter"
+          android:src="@mipmap/ic_launcher"/>-->
+
+
+    <!--id wont be visible-->
+    <TextView
+        android:id="@+id/tvDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/tvAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/tvTickets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvVenueid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvViews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvIMGurl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
+    <!--  <LinearLayout
+          android:id="@+id/myL"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentBottom="true"
+          android:layout_below="@+id/VollyNetworkImageView1"
+          android:orientation="horizontal"
+          android:padding="5dp"
+          android:weightSum="1">
+-->
+    <com.thebrownarrow.customfont.CustomFontTextView
+        android:id="@+id/tvVenue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fbf2f2f2"
+        android:lineSpacingExtra="3sp"
+        android:padding="2dp"
+        android:text="64 night club"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:visibility="gone"
+        app:custom_typeface="@string/font_segoue_reg" />
+    <!-- <ImageView
+         android:layout_gravity="center_vertical"
+         android:layout_width="20dp"
+         android:src="@drawable/ic_action_date_white"
+         android:layout_height="20dp" />-->
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:background="#fbf2f2f2"
+        android:gravity="left"
+        android:padding="2dp"
+        android:text="14 Dec"
+        android:textColor="#e00"
+        android:textSize="17sp"
+        android:visibility="gone"
+        app:custom_typeface="@string/font_segoue_reg" />
+
+
+</LinearLayout>
+

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "51214359655",
+    "firebase_url": "https://tukio-c380e.firebaseio.com",
+    "project_id": "tukio-c380e",
+    "storage_bucket": "tukio-c380e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51214359655:android:5730b65325cfbd56",
+        "android_client_info": {
+          "package_name": "ke.co.tukio.tukio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51214359655-bt8b2ok12mip9a5jbomqubo64q6q6ns6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ke.co.tukio.tukio",
+            "certificate_hash": "05b2c42efce0fee94c4a7066f4a2b486186f9d63"
+          }
+        },
+        {
+          "client_id": "51214359655-o0u5kkeqavb7v504qcoo1n2vjbb68ou3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSATgbrEH7qywfXpJRx1ql_zRIR0G3KMM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51214359655-o0u5kkeqavb7v504qcoo1n2vjbb68ou3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
