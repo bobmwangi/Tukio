@@ -225,7 +225,6 @@
             android:text="View venue"
             android:textColor="#666"
             android:textSize="18sp"
-            android:typeface="normal"
             app:custom_typeface="@string/font_segoue_reg" />
     </LinearLayout>
 
