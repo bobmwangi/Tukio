@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,6 +40,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import org.afinal.simplecache.ACache;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -64,7 +66,7 @@ import java.util.List;
 
 public class KickoFragment extends Fragment implements  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     View v;
-    TextView kickmsg, gpsmsg, loctxtv,distText, searchMsgTV, venueID, distInKm;
+    TextView kickmsg, gpsmsg, loctxtv,distText, searchMsgTV, venueID, distInKm, kickoValueTv;
     Button btnKick;
     ImageView hotimg, venueimg;
     ImageButton aboutKicko;
@@ -104,6 +106,8 @@ String ResponseFromPhp, LONGserver="0", LATserver="0", _cid, _cname, _cloc, _cdi
                  v = inflater.inflate(R.layout.fragment_kicko, container, false);
          kickmsg = (TextView) v.findViewById(R.id.kickMsg);
          venueID = (TextView) v.findViewById(R.id.placeID);
+         kickoValueTv = (TextView) v.findViewById(R.id.kickoValue);
+
          gpsmsg = (TextView) v.findViewById(R.id.GPSMsg);
          loctxtv = (TextView) v.findViewById(R.id.locationLL);
          searchMsgTV = (TextView) v.findViewById(R.id.searchMessage);
@@ -136,7 +140,7 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
 
         //end range bar
         checkNet();
-
+checkCacheToSetButtonBackground();
 
 
         return v;
@@ -386,6 +390,7 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
 
 
                     venueID.setText(_cid);
+                    kickoValueTv.setText(_ckicko);
                     btnKick.setVisibility(View.VISIBLE);
                     venueimg.setVisibility(View.VISIBLE);
                     aboutKicko.setVisibility(View.VISIBLE);
@@ -402,35 +407,35 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
                     //call method to fetch venue's picture
                     FetchVenueImage(_cname);
                     int mykicko=Integer.parseInt(_ckicko);
-                    if(mykicko==0){
+                    if(mykicko<0){
                         smallSlider.setInitialIndex(0);
-                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.notkicking));
+                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.black));
                         //CHANGE COLOURS
 //                        mColorCode = Color.parseColor("#32cd32");
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.notkicking);
-                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.black);
+                        Drawable sourceDrawable  =ResourcesCompat.getDrawable(getResources(), R.drawable.kickobar_fire, null);
                         Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
                         mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                         hotimg.setImageBitmap(mFinalBitmap);
                     }
-                    if(mykicko>0 && mykicko<10){
+                    if(mykicko==0 && mykicko<10){
                         smallSlider.setInitialIndex(1);
-                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.slightly));
+                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.notkicking));
                         //CHANGE COLOURS
 //                        mColorCode = Color.parseColor("#ffc125");
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.slightly);
-                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.notkicking);
+                        Drawable sourceDrawable  =ResourcesCompat.getDrawable(getResources(), R.drawable.kickobar_fire, null);
                         Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
                         mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                         hotimg.setImageBitmap(mFinalBitmap);
                     }
                     if(mykicko>=10 && mykicko<25){
                         smallSlider.setInitialIndex(2);
-                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.moderate));
+                        smallSlider.setFilledColor(ContextCompat.getColor(getContext(), R.color.slightly));
                         //CHANGE COLOURS
 //                        mColorCode = Color.parseColor("#ff7f00");
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.moderate);
-                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.slightly);
+                        Drawable sourceDrawable  =ResourcesCompat.getDrawable(getResources(), R.drawable.kickobar_fire, null);
                         Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
                         mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                         hotimg.setImageBitmap(mFinalBitmap);
@@ -442,7 +447,7 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
                         //CHANGE COLOURS
 //                        mColorCode = Color.parseColor("#ff4500");
                         mColorCode = ContextCompat.getColor(getContext(), R.color.kicking);
-                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);
+                        Drawable sourceDrawable  =ResourcesCompat.getDrawable(getResources(), R.drawable.kickobar_fire, null);
                         Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
                         mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                         hotimg.setImageBitmap(mFinalBitmap);
@@ -453,7 +458,8 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
                         //CHANGE COLOURS
                     //    mColorCode = Color.parseColor("#ee0000");
                         mColorCode = ContextCompat.getColor(getContext(), R.color.lit); //Android m (03-11-2014)
-                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);
+//                        Drawable sourceDrawable = getResources().getDrawable(R.drawable.kickobar_fire);  //- depreciated
+                        Drawable sourceDrawable  =ResourcesCompat.getDrawable(getResources(), R.drawable.kickobar_fire, null);
                         Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
                         mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                         hotimg.setImageBitmap(mFinalBitmap);
@@ -510,5 +516,17 @@ btnKick= (Button) v.findViewById(R.id.kickingBtn);
         }
 
 }
+public void checkCacheToSetButtonBackground(){
+    ACache mCache = ACache.get(getContext());
+    String kst = mCache.getAsString("kickstatus");
+    try {
+        if (kst.equals(null)) { //to record of a click
 
+        }
+        if (kst.contentEquals("placekicked")) {  //A record exists of the place being kicked with the last 5 min
+            btnKick.setBackgroundColor(Color.parseColor("#949494"));
+        }
+    } catch (NullPointerException e) {
+    }
+}
 }

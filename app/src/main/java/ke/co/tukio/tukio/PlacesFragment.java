@@ -57,7 +57,7 @@ import ke.co.tukio.tukio.recycler.GetDataAdapterVen;
 import ke.co.tukio.tukio.recycler.RecyclerViewAdapterVen;
 import test.jinesh.lib.GoogleMapStyler;
 
-public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
+public class PlacesFragment extends Fragment implements OnMapReadyCallback {
 
     private GPSTracker2 gpsTracker;
 
@@ -69,7 +69,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
     //slide up
     private SlidingUpPanelLayout mLayout;
     private static final String TAG = "PlacesFragment";
-//    TextView textView;
+    //    TextView textView;
     Context mContext; //added for Google map styling
     //end slider up
 
@@ -77,6 +77,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
     String JSON_VENUE_NAME = "manager_club";
     String JSON_VENUE_ID = "id";
     String JSON_VENUE_LOCATION = "location";
+    String JSON_VENUE_KICKOBAR = "kickobar";
 
     List<GetDataAdapterVen> GetDataAdapter3;
     RecyclerView recyclerViewVen;
@@ -233,7 +234,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 
 
 //        Toast.makeText(getContext(), "jj"+ publicjson, Toast.LENGTH_SHORT).show();
-        double longitude=-1.264451, latitude=36.804580; //initialized to National Archives
+        double longitude = -1.264451, latitude = 36.804580; //initialized to National Archives
         //to add current location of a uer
         gpsTracker = new GPSTracker2(getActivity());
         if (gpsTracker.canGetLocation()) {
@@ -241,15 +242,14 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 //            latitude = gpsTracker.getLatitude();
 //             longitude = gpsTracker.getLongitude();
             addPulsatingEffect();
-        }
-        else{
+        } else {
             Toast.makeText(getActivity(), "Turn on you location to find venues near you.", Toast.LENGTH_LONG).show();
         }
 //        LatLng locc = new LatLng(-1.264451, 36.804580);
         LatLng locc = new LatLng(latitude, longitude);
 //        mMap.addMarker(new MarkerOptions().position(locc).title("My location").icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin_home)).title("My location").snippet("You are here"));
 //        mMap.addMarker(new MarkerOptions().position(locc).title("My location").icon(BitmapDescriptorFactory.fromResource(R.drawable.person_icon_koteng)).title("My location").snippet("You are here"));
-       mMap.moveCamera(CameraUpdateFactory.newLatLng(locc));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(locc));
 //end user location
 
         //style the map
@@ -298,9 +298,9 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 
                 if (marker.equals(marker)) {
 
-                    if (marker.getSnippet().contentEquals("You are here")){
+                    if (marker.getSnippet().contentEquals("You are here")) {
                         Toast.makeText(getActivity(), "You are here", Toast.LENGTH_SHORT).show();
-                  return true;
+                        return true;
                     }
 
 
@@ -314,42 +314,47 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
                     ImageView kimg = (ImageView) dialog2.findViewById(R.id.kickoImgDialog);
 
 
-                    String kickoString =  marker.getSnippet();
+                    String kickoString = marker.getSnippet();
                     String[] separated = kickoString.split(" ");
                     int mColorCode = 0;
 
                     int kickoValue = Integer.parseInt(separated[1]);
-                    if(kickoValue==0){
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.notkicking);
+                    if(kickoValue<0){
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.black);
 //                        mColorCode = Color.parseColor("#32cd32");
                     }
-                    if(kickoValue>0 && kickoValue<10){
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.slightly);
+                    if (kickoValue == 0 && kickoValue < 10) {
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.notkicking);
 //                        mColorCode = Color.parseColor("#ffc125");
                     }
-                    if(kickoValue>=10 && kickoValue<25){
-                        mColorCode = ContextCompat.getColor(getContext(), R.color.moderate);
+                    if (kickoValue >= 10 && kickoValue < 25) {
+                        mColorCode = ContextCompat.getColor(getContext(), R.color.slightly);
 //                        mColorCode = Color.parseColor("#ff7f00");
                     }
 
-                    if(kickoValue>25 && kickoValue<50){
+                    if (kickoValue > 25 && kickoValue < 50) {
                         mColorCode = ContextCompat.getColor(getContext(), R.color.kicking);
 //
                     }
-                    if(kickoValue>=50){
+                    if (kickoValue >= 50) {
                         mColorCode = ContextCompat.getColor(getContext(), R.color.lit);
                     }
                     //CHANGE COLOURS
 //                    int mColorCode = Color.parseColor("#ff0000");
                     Drawable sourceDrawable = getResources().getDrawable(R.drawable.kicko_fire_white__one_two_eight);
                     Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
-                   Bitmap mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
+                    Bitmap mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
                     kimg.setImageBitmap(mFinalBitmap);
 
                     venuename.setText(marker.getTitle());
                     kicko.setText(marker.getSnippet());
-                    venueText.setText("Get to "+marker.getTitle() + " to kick the place on the Kickobar.");
-                    dialogButton.setOnClickListener(new View.OnClickListener() {
+                    if (kickoValue<0) {
+                        venueText.setText("Oops! "+marker.getTitle() + " is not available today.\nCheck out some other time.");
+                    }
+                    else {
+                        venueText.setText("Get to " + marker.getTitle() + " to kick the place on the Kickobar.");
+                    }
+                        dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
@@ -360,11 +365,10 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
                                 Intent i = new Intent(getActivity(), VenueDetailsActivity.class);
                                 i.putExtra("vname", String.valueOf(marker.getTitle()));
                                 getActivity().startActivity(i);
+                            } else {
+                                Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                            Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
-                            }
-                                dialog2.dismiss();
+                            dialog2.dismiss();
 
                         }
                     });
@@ -442,7 +446,8 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
                 GetDataAdapter4.setVenName(json.getString(JSON_VENUE_NAME));
                 GetDataAdapter4.setVenId(json.getString(JSON_VENUE_ID));
                 GetDataAdapter4.setVenLoc(json.getString(JSON_VENUE_LOCATION));
-                 } catch (JSONException e) {
+                GetDataAdapter4.setKicko(json.getString(JSON_VENUE_KICKOBAR));
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             GetDataAdapter3.add(GetDataAdapter4);
@@ -450,12 +455,8 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
         recyclerViewadapterVen = new RecyclerViewAdapterVen(GetDataAdapter3, getActivity());
         recyclerViewVen.setAdapter(recyclerViewadapterVen);
     }
+
     GoogleMapStyler googleMapStyler = new GoogleMapStyler.Builder(getContext())
-
-
-
-
-
 
 
             .setMainGeometryColor(Color.parseColor("#d1d1d2"))
@@ -489,29 +490,26 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
             .build();
 
 
-
-
-
-
     //animate current location
-    private void addPulsatingEffect2(Location userLocation){
+    private void addPulsatingEffect2(Location userLocation) {
 
     }
-    private void addPulsatingEffect(){
+
+    private void addPulsatingEffect() {
         gpsTracker = new GPSTracker2(getActivity());
 //        if (gpsTracker.canGetLocation()) {
-            //your actual location old code till 04-11-17
-           double latitude = gpsTracker.getLatitude();
-            double longitude = gpsTracker.getLongitude();
+        //your actual location old code till 04-11-17
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
 //        }
 
 //        final LatLng userLatlng = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-     final   LatLng userLatlng = new LatLng(latitude, longitude);
-        if(lastPulseAnimator != null){
+        final LatLng userLatlng = new LatLng(latitude, longitude);
+        if (lastPulseAnimator != null) {
             lastPulseAnimator.cancel();
         }
 
-        if(lastUserCircle != null) {
+        if (lastUserCircle != null) {
             lastUserCircle.setCenter(userLatlng);
         }
 
@@ -520,7 +518,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
 
-                if(lastUserCircle != null)
+                if (lastUserCircle != null)
                     lastUserCircle.setRadius((Float) animation.getAnimatedValue());
                 else {
                     lastUserCircle = mMap.addCircle(new CircleOptions()
@@ -534,7 +532,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
         });
     }
 
-    protected ValueAnimator valueAnimate(float radius, ValueAnimator.AnimatorUpdateListener updateListener){
+    protected ValueAnimator valueAnimate(float radius, ValueAnimator.AnimatorUpdateListener updateListener) {
 
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, radius);
         valueAnimator.setDuration(PULSE_DURATION);
@@ -548,25 +546,6 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
 //        {
 //            @Override
@@ -577,10 +556,8 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 //        });
 
 
-
-
-        //old code
-               // Add a marker in Sydney and move the camera
+//old code
+// Add a marker in Sydney and move the camera
 //        LatLng locc = new LatLng(-1.264451, 36.804580);
 //        mMap.addMarker(new MarkerOptions().position(locc).title("Privee- Westlands"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(locc));
@@ -597,7 +574,7 @@ public class PlacesFragment extends Fragment  implements OnMapReadyCallback {
 //        mMap.setMaxZoomPreference(2.0f);
 //        mMap.setMinZoomPreference(14.0f);
 
-       // ArrayList<LatLng> coordinates; // your ArrayList with marker's coordinates
+// ArrayList<LatLng> coordinates; // your ArrayList with marker's coordinates
 //        int size = PlaceList.size();
 //        Toast.makeText(getContext(), "Size "+size, Toast.LENGTH_SHORT).show();
 //        for (int i = 0; i < size; ++i) {

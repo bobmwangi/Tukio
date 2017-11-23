@@ -1,5 +1,6 @@
 package ke.co.tukio.tukio;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,10 +58,15 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
 
     private static final String TAG_ID = "id";
     private static final String TAG_LOCATION = "location";
-    String _vid, _vloc, _vurl, vname_;
-    TextView vname, vloc, vdate, vid;
+    private static final String TAG_LAT = "latitude";
+    private static final String TAG_LONG = "longitude";
+    private static final String TAG_RATING = "rating";
+    private static final String TAG_DESC = "description";
+    String _vid, _vloc, _vurl, vname_, _vlat, _vlong, _vrating, _vdesc;
+    TextView vname, vloc, vlat, vlong, vid, vrating, vdesc;
     ImageView imgv, scrollImg;
 
+    private GPSTracker2 gpsTracker;
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     JSONArray items = null;
@@ -102,6 +108,10 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
         vloc = (TextView) findViewById(R.id.venueLocation);
         vid = (TextView) findViewById(R.id.VenueId);
         vname = (TextView) findViewById(R.id.venueName);
+        vlat = (TextView) findViewById(R.id.VenueLat);
+        vlong = (TextView) findViewById(R.id.VenueLong);
+        vrating = (TextView) findViewById(R.id.venueRating);
+        vdesc = (TextView) findViewById(R.id.venueDesc);
 
 //        setTitle(vname_);
 
@@ -218,6 +228,10 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
 
                     _vloc = jObj.getString(TAG_LOCATION);
                     _vid = jObj.getString(TAG_ID);
+                    _vlat = jObj.getString(TAG_LAT);
+                    _vlong = jObj.getString(TAG_LONG);
+                    _vrating = jObj.getString(TAG_RATING);
+                    _vdesc = jObj.getString(TAG_DESC);
                 }
 
             } catch (JSONException e) {
@@ -238,6 +252,10 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
 //vloc.setText(_vloc);
                     vloc.setText(_vloc);
                     vid.setText(_vid);
+                    vlat.setText(_vlat);
+                    vlong.setText(_vlong);
+                    vrating.setText(_vrating);
+                    vdesc.setText(_vdesc);
 //                    Toast.makeText(VenueDetailsActivity.this, "Id "+_vid, Toast.LENGTH_SHORT).show();
                     GetPictures(_vid); //swipe pics
                 }
@@ -350,9 +368,12 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-
         if (id == R.id.addFavourite) {
             addFav();
+            return true;
+        }
+        if (id == R.id.viewDirections) {
+            gotoMap();
             return true;
         }
 
@@ -360,6 +381,13 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
     }
 
     public void addFav() {
+        String vId = vid.getText().toString().trim();
+        FavouriteEventOnServer(vId);
+    }
+    public void addFav2() {
+        String vId = vid.getText().toString().trim();
+        FavouriteEventOnServer(vId);
+
 //        Toast.makeText(this, "Add to fav", Toast.LENGTH_SHORT).show();
         String new_venue_id = "0";
         //Read shared Pref
@@ -378,18 +406,19 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
 //            editor.putString("myVenues", new_venue_id);
 //            editor.apply();
 
-        if (!stored_venue_ids.isEmpty()){
-        new_venue_id = stored_venue_ids + "," + _vid;
-    }
-            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(VenueDetailsActivity.this);
-            SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putString("myVenues", new_venue_id);
-            editor.apply();
+        if (!stored_venue_ids.isEmpty()) {
+            new_venue_id = stored_venue_ids + "," + _vid;
+        }
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(VenueDetailsActivity.this);
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("myVenues", new_venue_id);
+        editor.apply();
         Snackbar();
 
         Toast.makeText(this, "old: " + stored_venue_ids + "new: " + new_venue_id, Toast.LENGTH_SHORT).show();
 
     }
+
     public void Snackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 "Added to favourites", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
@@ -403,5 +432,87 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
         textView.setTextColor(Color.YELLOW);
         snackbar.show();
     }
+
+    public void gotoMap() {
+        String tLat, tLong, tName;
+        tLat = vlat.getText().toString().trim();
+        tLong = vlong.getText().toString().trim();
+        tName = vname.getText().toString().trim();
+        Toast.makeText(this, "LatLong"+ tLat+" "+tLong+" "+tName, Toast.LENGTH_SHORT).show();
+
+        if (tLat.isEmpty() && (tLong.isEmpty())) {
+            Toast.makeText(this, "Location undefined.", Toast.LENGTH_SHORT).show();
+        } else { //check if locations is turned on
+            gpsTracker = new GPSTracker2(VenueDetailsActivity.this);
+            if (gpsTracker.canGetLocation()) {
+                Intent mii = new Intent(this, MapRouteActivity.class);
+                mii.putExtra("lat", tLat);
+                mii.putExtra("long", tLong);
+                mii.putExtra("vname", tName);
+                startActivity(mii);
+            } else {
+                Toast.makeText(this, "Turn on your location to view the route", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
+
+    public void FavouriteEventOnServer(final String vId) {
+        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
+        final String uid = pref1stRun.getString("userId", "");
+        new Thread() {
+            //        @Override
+            public void run() {
+
+
+                String path = "http://www.tukio.co.ke/applicationfiles/insertfavouritevenue.php?venueid=" + vId+"&userid="+uid;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String ServerResponse = bo.toString();
+                            String response = ServerResponse.trim();
+
+                            ShowFavSnackBar(response);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void ShowFavSnackBar(String responce){
+        if (responce.contentEquals("venue favourited")){
+            Snackbar();
+        }
+        if (responce.contentEquals("exists")){
+            Toast.makeText(this, "Venue already exists in favourites.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 
 }

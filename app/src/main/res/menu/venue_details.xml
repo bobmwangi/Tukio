@@ -13,6 +13,12 @@
         android:icon="@drawable/ic_action_add_fav"
         android:title="Favourite this"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/viewDirections"
+        android:icon="@drawable/ic_action_directions"
+        android:title="View direction"
+        app:showAsAction="always" />
+
 
 
 </menu>

@@ -81,11 +81,10 @@ android:id="@+id/searchMessage"
                 android:layout_height="match_parent">
             <com.github.channguyen.rsv.RangeSliderView
                 android:id="@+id/rsv_small"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
                 rsv:filledColor="#1A5F77"
                 />
             <ImageButton
@@ -93,9 +92,8 @@ android:id="@+id/searchMessage"
                 android:id="@+id/aboutKicko"
                 android:background="@null"
                 android:layout_weight="0"
-                android:layout_marginLeft="5dp"
                 android:onClick="aboutKicko"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@drawable/ic_action_about"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -162,6 +160,12 @@ android:id="@+id/searchMessage"
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/placeID"
+                android:visibility="gone"
+                android:textColor="#fff"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/kickoValue"
                 android:visibility="gone"
                 android:textColor="#fff"
                 android:layout_height="match_parent" />

@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;  //to help in logout
     private GoogleApiClient mGoogleApiClient;  //to help in logout
     private String TAG = MainActivity.class.getSimpleName();
-    String publicjson="nothing";
-    String useremail="imagemissing";
-    ArrayList<HashMap<String, String>>PlaceList;
-//    ArrayList dataModels;  //new to populate array
+    String publicjson = "nothing";
+    String useremail = "imagemissing";
+    ArrayList<HashMap<String, String>> PlaceList;
+    //    ArrayList dataModels;  //new to populate array
     List<CharSequence> list = new ArrayList<CharSequence>(); //checklist
 
 
@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         // [START initialize_auth]   //initialize Firebase so you can be able to logout
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
-
 
 
         //Used to select an item programmatically
@@ -228,33 +227,31 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    public void ConnLoc(){
+    public void ConnLoc() {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
 
             Intent intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent1);
-        }
-        else Snackbar();
+        } else Snackbar();
     }
-    public void reminders(View v){
+
+    public void reminders(View v) {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
 
             Intent pIntent = new Intent(getBaseContext(), ReminderEventsActivity.class);
             startActivityForResult(pIntent, 0);
-        }
-        else Snackbar();
+        } else Snackbar();
 
 //        Toast.makeText(this, "Reminders", Toast.LENGTH_SHORT).show();
 
     }
 
 
-    public void promote(View v)
-    {
+    public void promote(View v) {
         Uri uri = Uri.parse("mailto:info@tukio.co.ke");
         Intent uu = new Intent(Intent.ACTION_SENDTO, uri);
         uu.putExtra(Intent.EXTRA_SUBJECT, "Promote event on Tukio");
@@ -326,8 +323,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Feature under development.", Toast.LENGTH_SHORT).show();
     }*/
 
-    public void about(View v)
-    {
+    public void about(View v) {
         final Dialog dialog2 = new Dialog(this);
         dialog2.setContentView(R.layout.customdialogabout);
         Button dialogButton = (Button) dialog2.findViewById(R.id.dialogButtonOK);
@@ -350,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void share22(View v){
+    public void share22(View v) {
         StringBuffer stringBuffer = new StringBuffer();
         try {
             //Attaching BufferedReader to the FileInputStream by the help of InputStreamReader
@@ -367,33 +363,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Displaying data on the toast
-        Toast.makeText(getApplicationContext(),"Saved data"+stringBuffer.toString(),
+        Toast.makeText(getApplicationContext(), "Saved data" + stringBuffer.toString(),
                 Toast.LENGTH_LONG).show();
 
     }
 
 
-   /* public void share(View v){
-        Intent pIntent = new Intent(getBaseContext(), EventsActivity.class);
-        startActivityForResult(pIntent, 0);
-    }*/
-    public void share(View v)
-    {
+    /* public void share(View v){
+         Intent pIntent = new Intent(getBaseContext(), EventsActivity.class);
+         startActivityForResult(pIntent, 0);
+     }*/
+    public void share(View v) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(Intent.EXTRA_TEXT, "Hey, check out Tukio Android App. @\nhttp://tukio.co.ke");
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Tukio App\n");
         startActivity(Intent.createChooser(sharingIntent, "Share app using"));
     }
-    public void favourites(View v)
-    {
+
+    public void favourites(View v) {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
 
             new FetchVenuesFromServer().execute();
-        }
-        else Snackbar();
+        } else Snackbar();
 
 
 //        refreshmap();
@@ -403,11 +397,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    private void insertToDatabase(String eventNa, final String phoneNo)
-    {
-        class SendPostReqAsyncTask extends AsyncTask<String, Void, String>
-        {
+    private void insertToDatabase(String eventNa, final String phoneNo) {
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
                 String paramname = params[0];
@@ -433,28 +424,21 @@ public class MainActivity extends AppCompatActivity {
                     HttpEntity entity = response.getEntity();
 
                     final String content;
-                    try
-                    {
+                    try {
                         content = EntityUtils.toString(entity);
-                        runOnUiThread(new Runnable()
-                        {
+                        runOnUiThread(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 MyREsponse = content;
                             }
                         });
 
-                    }
-                    catch (ClientProtocolException e){
+                    } catch (ClientProtocolException e) {
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
-                }
-                catch (ClientProtocolException e)
-                {
+                } catch (ClientProtocolException e) {
                     Toast.makeText(MainActivity.this, "ClientProtocolException", Toast.LENGTH_SHORT).show();
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
                     Toast.makeText(MainActivity.this, "IOException", Toast.LENGTH_SHORT).show();
                 }
 
@@ -464,12 +448,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(String result)
-            {
+            protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 pDialog2.dismiss();
-                if (MyREsponse.contains("Success"))
-                {
+                if (MyREsponse.contains("Success")) {
 
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
                     alertDialog.setTitle("Success");
@@ -482,9 +464,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                     alertDialog.show();
-                }
-                else
-                    Toast.makeText(MainActivity.this, MyREsponse +". Error while sending. Try again later", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(MainActivity.this, MyREsponse + ". Error while sending. Try again later", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -492,7 +473,8 @@ public class MainActivity extends AppCompatActivity {
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(eventNa, phoneNo);
     }
-    public void TurnOnLoc(View v){
+
+    public void TurnOnLoc(View v) {
         ConnLoc();
 
     }
@@ -519,65 +501,72 @@ public class MainActivity extends AppCompatActivity {
 
     public void kicking(View v) {
         TextView diist = (TextView) findViewById(R.id.venueDistanceInKm);
-        double dista = Double.parseDouble( diist.getText().toString());
-if (dista<1.0){
-    checkCache();
-}
-        if(dista>=1.0){
+        double dista = Double.parseDouble(diist.getText().toString());
+        if (dista < 1.0) {
+            checkCache();
+        }
+        if (dista >= 1.0) {
             Toast.makeText(this, "You cannot kick this venue until you're inside it.", Toast.LENGTH_SHORT).show();
         }
     }
-    public void checkCache() {
 
+    public void checkCache() {
 
         ACache mCache = ACache.get(MainActivity.this);
         String kst = mCache.getAsString("kickstatus");
-        Toast.makeText(this, "Cache: "+ kst, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Cache: " + kst, Toast.LENGTH_SHORT).show();
         try {
-        if(kst.equals(null)){
-            CheckNetKick();
-        }
-            if (kst.contentEquals("placekicked")){
-            Toast.makeText(this, "You recently kicked this place. Please wait before you can kick again.", Toast.LENGTH_SHORT).show();
+            if (kst.equals(null)) {
+                CheckNetKick();
+            }
+            if (kst.contentEquals("placekicked")) {
+                Toast.makeText(this, "You recently kicked this place. Please wait before you can kick again.", Toast.LENGTH_SHORT).show();
 
-        }
-        } catch(NullPointerException e) {
+            }
+        } catch (NullPointerException e) {
 //            Toast.makeText(this, "No previous kicks", Toast.LENGTH_SHORT).show();
             CheckNetKick();
         }
-//        if (kst.contentEquals("placekicked")){
-//            Toast.makeText(this, "You recently kicked this place. Please wait before you can kick again.", Toast.LENGTH_SHORT).show();
-//
-//        }
-//        else{
-//            CheckNetKick();
-//        }
 
     }
+
     public void CheckNetKick() {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
 
             kickPlace();
-        }
-        else Snackbar();
+        } else Snackbar();
 
     }
 
 
-    public void kickPlace(){
-final Button kBtn = (Button) findViewById(R.id.kickingBtn);
+    public void kickPlace() {
+        TextView kickoTv = (TextView) findViewById(R.id.kickoValue);
+        String kickValue = kickoTv.getText().toString().trim();
+        int kicko = Integer.parseInt(kickValue);
+        if (kicko < 0) {
+            Toast.makeText(this, "You cannot kick this venue.", Toast.LENGTH_SHORT).show();
+        } else {
+            kickPlace2();
+        }
+
+    }
+
+    public void kickPlace2() {
+        final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         kBtn.setText("Kicking...".toString().toLowerCase());
         venueIdKicko = (TextView) findViewById(R.id.placeID);
-      final  String placeid = venueIdKicko.getText().toString();
+        final String placeid = venueIdKicko.getText().toString();
+        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
+        final String uid = pref1stRun.getString("userId", "");
 //        Toast.makeText(MainActivity.this, "Venue id: "+placeid, Toast.LENGTH_SHORT).show();
 
         new Thread() {
             //        @Override
-            public void run(){
+            public void run() {
 
-                String path ="http://www.tukio.co.ke/applicationfiles/kickplace.php?id="+placeid;
+                String path = "http://www.tukio.co.ke/applicationfiles/kickplace.php?venue_id=" + placeid + "&user_id=" + uid;
                 URL u = null;
                 try {
                     u = new URL(path);
@@ -611,41 +600,41 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }.start();
     }
 
-    public void setFeed2(View v){
+    public void setFeed2(View v) {
         Calendar cal = Calendar.getInstance();
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("beginTime", cal.getTimeInMillis());
         intent.putExtra("allDay", true);
         intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+        intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
         intent.putExtra("title", "A Test Event from android app");
         startActivity(intent);
     }
-    public void setFeed(View v){
+
+    public void setFeed(View v) {
 
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
 
             new FetchVenuesFromServer().execute();
-        }
-        else Snackbar();
+        } else Snackbar();
     }
-//    public void setFeed3(View v){
-    public void setFeed3(){
+
+    //    public void setFeed3(View v){
+    public void setFeed3() {
         //Toast.makeText(this, "Create a news feed.", Toast.LENGTH_SHORT).show();
 
         // Intialize  readable sequence of char values
-        final CharSequence[] dialogList=  list.toArray(new CharSequence[list.size()]);
+        final CharSequence[] dialogList = list.toArray(new CharSequence[list.size()]);
         final AlertDialog.Builder builderDialog = new AlertDialog.Builder(MainActivity.this);
         builderDialog.setTitle("Select Place");
         int count = dialogList.length;
@@ -654,7 +643,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         // Creating multiple selection by using setMutliChoiceItem method
         builderDialog.setMultiChoiceItems(dialogList, is_checked,
                 new DialogInterface.OnMultiChoiceClickListener() {
-                    public void onClick(DialogInterface dialog,  int whichButton, boolean isChecked) {
+                    public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
                     }
                 });
 
@@ -707,21 +696,23 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 //        Intent pIntent = new Intent(getBaseContext(), ParseJSON2.class);
 //        startActivityForResult(pIntent, 0);
 
-    public void refreshmap(View v){
+    public void refreshmap(View v) {
         PlaceList = new ArrayList<>();
 
         new Getplaces().execute();
     }
-    public void refreshmap2(){
+
+    public void refreshmap2() {
         PlaceList = new ArrayList<>();
 
         new Getplaces().execute();
     }
+
     public class Getplaces extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(MainActivity.this,"Refreshing for new data",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Refreshing for new data", Toast.LENGTH_LONG).show();
 
         }
 
@@ -734,7 +725,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
-            publicjson=jsonStr;
+            publicjson = jsonStr;
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
@@ -812,7 +803,6 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
             }*/ //end
 
 
-
             FileOutputStream fos;
             try {
                 fos = openFileOutput("jsonMapsDatafile.txt", Context.MODE_PRIVATE);
@@ -820,19 +810,22 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
                 fos.write(publicjson.getBytes());
                 fos.close();
 
-                Toast.makeText(getApplicationContext(),"Data saved", Toast.LENGTH_LONG).show();
-            } catch (FileNotFoundException e) {e.printStackTrace();}
-            catch (IOException e) {e.printStackTrace();}
+                Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_LONG).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }
 
-    class FetchVenuesFromServer extends AsyncTask<String, String, String>
-    {
-        String jsonValues=null;
+    class FetchVenuesFromServer extends AsyncTask<String, String, String> {
+        String jsonValues = null;
+
         /**
          * Before starting background thread Show Progress Dialog
-         * */
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -845,9 +838,8 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 
         /**
          * getting song json and parsing
-         * */
-        protected String doInBackground(String... args)
-        {
+         */
+        protected String doInBackground(String... args) {
 
             // List<NameValuePair> params = new ArrayList<NameValuePair>();
             // Building Parameters
@@ -879,18 +871,16 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 
         /**
          * After completing background task Dismiss the progress dialog
-         * **/
+         **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting song information
             pDialog3.dismiss();
 
-            runOnUiThread(new Runnable()
-            {
-                public void run()
-                {
-                    try{
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
                         JSONArray jsonArray = new JSONArray(jsonValues);
-                        Toast.makeText(MainActivity.this, "No of places: "+jsonArray.length(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "No of places: " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                         list.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -904,7 +894,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 
                         }
                         setFeed3();
-                    } catch (JSONException e){
+                    } catch (JSONException e) {
                         Log.e("PLACES", "Json parsing error: " + e.getMessage());
                     }
 //                    Toast.makeText(MainActivity.this, "end", Toast.LENGTH_SHORT).show(); //working well
@@ -914,7 +904,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         }
     }
 
-//    public void loadQR(View v) {
+    //    public void loadQR(View v) {
 //        ACache mCache = ACache.get(this);
 //        String value = mCache.getAsString("test_key");
 //        Toast.makeText(this, "Cached: "+value, Toast.LENGTH_SHORT).show();
@@ -930,18 +920,18 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
         useremail = pref1stRun.getString("useremail", "");
     }
+
     public class LoadImageFromURL extends AsyncTask<String, Void, Bitmap> {
 
         @Override
         protected Bitmap doInBackground(String... params) {
             // TODO Auto-generated method stub
             try {
-                URL url = new URL("http://tukio.co.ke/applicationfiles/qrimages/"+useremail+".png");
+                URL url = new URL("http://tukio.co.ke/applicationfiles/qrimages/" + useremail + ".png");
                 InputStream is = url.openConnection().getInputStream();
                 Bitmap bitMap = BitmapFactory.decodeStream(is);
                 return bitMap;
-            } catch (MalformedURLException e)
-            {
+            } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
@@ -963,7 +953,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 //            alertadd.setTitle("Android");
             LayoutInflater factory = LayoutInflater.from(MainActivity.this);
             final View view = factory.inflate(R.layout.custom_dialog_image, null);
-            ImageView image= (ImageView) view.findViewById(R.id.QRimageView);
+            ImageView image = (ImageView) view.findViewById(R.id.QRimageView);
 //            image.setImageResource(R.drawable.ic_launcher);
             image.setImageBitmap(result);
 //            TextView text= (TextView) view.findViewById(R.id.textView);
@@ -982,7 +972,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
 
     }
 
-    public void logout(View v){
+    public void logout(View v) {
         AlertDialog.Builder alertadd = new AlertDialog.Builder(MainActivity.this);
 
 //            alertadd.setTitle("Android");
@@ -997,6 +987,7 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         alertadd.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dlg, int sumthin) {
 
+//                SIGN OUT
                 Log.d(TAG, "signOut()");
                 // Firebase sign out
                 mAuth.signOut();
@@ -1008,15 +999,12 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
                 if (mGoogleApiClient.isConnected()) {
 //                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                     mGoogleApiClient.disconnect();
-                }
+                    mGoogleApiClient.clearDefaultAccountAndReconnect();
 
-//                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-//                        new ResultCallback<Status>() {
-//                            @Override
-//                            public void onResult(@NonNull Status status) {
-////                                updateUI(null);
-//                            }
-//                        });
+                }
+//                END LOGOUT
+
+
                 ACache mCache = ACache.get(MainActivity.this);
                 mCache.clear();
                 SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -1035,10 +1023,13 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
                     fos.write("".getBytes());
                     fos.close();
 
-                } catch (FileNotFoundException e) {e.printStackTrace();}
-                catch (IOException e) {e.printStackTrace();}
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    Toast.makeText(MainActivity.this, "All data cleared.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "All data cleared.", Toast.LENGTH_SHORT).show();
                 Intent ff = new Intent(getBaseContext(), SplashActivity.class);
                 ff.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivityForResult(ff, 0);
@@ -1049,7 +1040,8 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         alertadd.show();
 
     }
-    public void aboutKicko(View v){
+
+    public void aboutKicko(View v) {
         PopupWindow popup = new PopupWindow(MainActivity.this);
         View layout = getLayoutInflater().inflate(R.layout.popup_window_content, null);
         popup.setContentView(layout);
@@ -1061,8 +1053,9 @@ final Button kBtn = (Button) findViewById(R.id.kickingBtn);
         popup.setFocusable(true);
         // Show anchored to button
 //        popup.setBackgroundDrawable(new BitmapDrawable());
-        popup.showAsDropDown(v, 1,0);
+        popup.showAsDropDown(v, 1, 0);
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);

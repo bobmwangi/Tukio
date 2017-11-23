@@ -4,7 +4,7 @@ package ke.co.tukio.tukio.recycler;
 public class GetDataAdapterVen {
 
     public String ImageServerUrl;
-    public String  VenName, VenId, VenLoc;
+    public String  VenName, VenId, VenLoc, KickoValue;
 
     public String getImageServerUrl() {
         return ImageServerUrl;
@@ -38,4 +38,11 @@ public class GetDataAdapterVen {
         this.VenLoc = VenLoc;
     }
 
+    //KICKOVALUE
+    public String getKicko() {
+        return KickoValue;
+    }
+    public void setKicko(String KickoValue) {
+        this.KickoValue = KickoValue;
+    }
 }

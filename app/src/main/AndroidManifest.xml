@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ke.co.tukio.tukio">
 
-    <uses-sdk tools:overrideLibrary="test.jinesh.lib" />
+    <uses-sdk tools:overrideLibrary="test.jinesh.lib, com.ahmadrosid.lib.drawroutemap" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -60,10 +60,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <!-- added nohistory to make Sign up activity irresumable removed due to Google login -->
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings"
-            android:parentActivityName=".MainActivity" />
+
 
         <!-- For location services -->
         <meta-data
@@ -81,18 +78,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <activity
             android:name=".VenueDetailsActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ReminderEventsActivity"
             android:label="@string/reminder_activity"
+            android:noHistory="true"
             android:parentActivityName=".MainActivity" />
-
-
-
-
+        <activity
+            android:name=".MapRouteActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FavouriteVenuesActivity"
+            android:noHistory="true"
+            android:label="@string/fav_venues"
+            android:parentActivityName=".MainActivity" ></activity>
     </application>
 
 </manifest>

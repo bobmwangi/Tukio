@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
@@ -37,8 +35,8 @@ import java.util.Date;
 import java.util.List;
 
 import ke.co.tukio.tukio.R;
-import ke.co.tukio.tukio.ReminderEventsActivity;
 import ke.co.tukio.tukio.VenueDetailsActivity;
+import ke.co.tukio.tukio.util.CheckConnectivity;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -142,123 +140,61 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View view) {
 
-//                    int itemPosition = getLayoutPosition();
-                    //Toast.makeText(context, itemPosition + ":" +String.valueOf(eid.getText()) + String.valueOf(ename.getText()), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(context, itemPosition + ": " +String.valueOf(eid.getText()),  Toast.LENGTH_SHORT).show();
-                    ConnectivityManager cn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo nf = cn.getActiveNetworkInfo();
-                    if (nf != null && nf.isConnected() == true) {
 
-//                        Toast.makeText(context, "Name: "+String.valueOf(ename.getText()), Toast.LENGTH_SHORT).show();
-//                    Intent ii = new Intent(context, EventsDetailsActivity.class);
-//                    ii.putExtra("eid", String.valueOf(eid.getText()));
-//                    ii.putExtra("ename", String.valueOf(ename.getText()));
-//                    ii.putExtra("evenue", String.valueOf(evenue.getText()));
-//                    ii.putExtra("evenueid", String.valueOf(evenueid.getText()));
-//                    ii.putExtra("edate", String.valueOf(edate.getText()));
-//                    ii.putExtra("edate2", String.valueOf(edate2.getText()));
-//                    ii.putExtra("eviews", String.valueOf(eviews.getText()));
-//                    ii.putExtra("edesc", String.valueOf(edesc.getText()));
-//                    ii.putExtra("eurl", String.valueOf(eurl.getText()));
-//                    context.startActivity(ii);
-//mthd();
-//                            IncreViews(String.valueOf(eviews.getText()));
+//                        IncreViews(String.valueOf(eid.getText()));  //increase views if there is internet
 
 
+                    Context context = view.getContext();
+                    final Context mcontext = view.getContext();
+                    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
-                        Context context = view.getContext();
-                        final Context mcontext = view.getContext();
-                        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                        View vieww = inflater.inflate(R.layout.bottom_sheet_events, null);
-                        TextView ttl = (TextView) vieww.findViewById(R.id.eventTitleBS);
-                        TextView ven = (TextView) vieww.findViewById(R.id.viewVenBS);
-                        TextView dat = (TextView) vieww.findViewById(R.id.dateBS);
-                        TextView tim = (TextView) vieww.findViewById(R.id.timeBS);
-                        TextView seenby = (TextView) vieww.findViewById(R.id.seenByBS);
-                        TextView age = (TextView) vieww.findViewById(R.id.ageBS);
-                        TextView about = (TextView) vieww.findViewById(R.id.aboutBS);
-                        TextView reminder = (TextView) vieww.findViewById(R.id.setRemBS);
-                        ttl.setText(String.valueOf(ename.getText()));
-                        ven.setText(String.valueOf(evenue.getText()));
-                        dat.setText(String.valueOf(edate.getText()));
-                        tim.setText(String.valueOf(evtime.getText()));
-                        age.setText("Age: "+String.valueOf(evage.getText()));
-//                        tim.setText(eventTime2);
-                        seenby.setText("Seen by: "+String.valueOf(eviews.getText()));
-//                        age.setText("Age: "+eventAge2);
-                        about.setText(String.valueOf(edesc.getText()));
-                        BottomSheetDialog dialog = new BottomSheetDialog(context);
-                        dialog.setContentView(vieww);
-                        dialog.setTitle(String.valueOf(ename.getText()));
-                        dialog.setCancelable(true);
-                        reminder.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View view) {
-                                //OnCLick Stuff
+                    View vieww = inflater.inflate(R.layout.bottom_sheet_events, null);
+                    TextView ttl = (TextView) vieww.findViewById(R.id.eventTitleBS);
+                    TextView ven = (TextView) vieww.findViewById(R.id.viewVenBS);
+                    TextView dat = (TextView) vieww.findViewById(R.id.dateBS);
+                    TextView tim = (TextView) vieww.findViewById(R.id.timeBS);
+                    TextView seenby = (TextView) vieww.findViewById(R.id.seenByBS);
+                    TextView age = (TextView) vieww.findViewById(R.id.ageBS);
+                    TextView about = (TextView) vieww.findViewById(R.id.aboutBS);
+                    TextView reminder = (TextView) vieww.findViewById(R.id.setRemBS);
+                    ttl.setText(String.valueOf(ename.getText()));
+                    ven.setText("View " + String.valueOf(evenue.getText()));
+                    dat.setText(String.valueOf(edate.getText()));
+                    tim.setText(String.valueOf(evtime.getText()));
+                    age.setText("Age: " + String.valueOf(evage.getText()));
+                    seenby.setText("Seen by: " + String.valueOf(eviews.getText()));
+                    about.setText(String.valueOf(edesc.getText()));
+                    BottomSheetDialog dialog = new BottomSheetDialog(context);
+                    dialog.setContentView(vieww);
+                    dialog.setTitle(String.valueOf(ename.getText()));
+                    dialog.setCancelable(true);
+                    reminder.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            FavouriteEventOnServer(String.valueOf(eid.getText()));
+                            //OnCLick Stuff
 //                                Toast.makeText(mcontext, "reminder", Toast.LENGTH_SHORT).show();
-                                addToCalender(String.valueOf(edate2.getText()), String.valueOf(eid.getText()), String.valueOf(ename.getText()));
-                            }
-                        });
-                        ven.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View view) {
-                                //OnCLick Stuff
+                            addToCalender(String.valueOf(edate2.getText()), String.valueOf(eid.getText()), String.valueOf(ename.getText()));
+                        }
+                    });
+                    ven.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            //OnCLick Stuff
+                            CheckConnectivity checkNetwork = new CheckConnectivity();
+                            if (checkNetwork.isConnected(mcontext)) {
+                                Toast.makeText(mcontext, "Venue: " + String.valueOf(evenue.getText()), Toast.LENGTH_SHORT).show();
                                 Intent mii = new Intent(mcontext, VenueDetailsActivity.class);
-                                Toast.makeText(mcontext, "Venue: "+String.valueOf(evenue.getText()), Toast.LENGTH_SHORT).show();
                                 mii.putExtra("vname", String.valueOf(evenue.getText()));
                                 mcontext.startActivity(mii);
-                            }
-                        });
-                        dialog.show();
-
-
-//                        final Dialog mBottomSheetDialog = new Dialog (context, R.style.AppTheme);
-//                        mBottomSheetDialog.setTitle("Title");
-//                        mBottomSheetDialog.setContentView(vieww);
-//                        mBottomSheetDialog.setCancelable(true);
-//                        mBottomSheetDialog.setCancelable (true);
-//                        mBottomSheetDialog.getWindow ().setLayout (LinearLayout.LayoutParams.MATCH_PARENT,
-//                                LinearLayout.LayoutParams.WRAP_CONTENT);
-//                        mBottomSheetDialog.getWindow ().setGravity (Gravity.BOTTOM);
-//                        mBottomSheetDialog.show ();
-                       /* AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
-                        alertDialog.setTitle("Account is ready.");
-                        alertDialog.setMessage("Your user ID is: ");
-                        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
+                            } else {
+                                Toast.makeText(mcontext, "No internet connection.", Toast.LENGTH_SHORT).show();
                             }
 
-                        });
-//
-            alertDialog.show();*/
-//                        Activity activity = (ReminderEventsActivity.getApplicationContext()).getCurrentActivity();
-
-                    /*  BottomSheet bs = new BottomSheet.Builder(RecyclerViewAdapter.ViewHolder.this)
-//                        new BottomSheet.Builder(Activity activity(){
-                                .title("title")
-                                .sheet(R.menu.list)
-                                .listener(new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case R.id.help:
-//                                        q.toast("Help me!");
-                                                Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
-                                                break;
-                                        }
-                                    }
-                                }).show();*/
-                    } else {
-                        Intent iii = new Intent(context, ReminderEventsActivity.class);
-                        iii.putExtra("eid", String.valueOf(eid.getText()));
-                        iii.putExtra("ename", String.valueOf(ename.getText()));
-                        iii.putExtra("method", "ShowBottomSheet");
-                        context.startActivity(iii);
-//                        Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dialog.show();
+                    IncreViews(String.valueOf(eid.getText()));
 
 
-                    }
 
                 }
             });
@@ -285,14 +221,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-    public void IncreViews(final String evId){
-//        Context context = vv.getContext();
+    public void IncreViews(final String evId) {
+        CheckConnectivity checkNetwork = new CheckConnectivity();
+        if (checkNetwork.isConnected(context)) {
+            IncreViews2(String.valueOf(evId));  //increase views if there is internet
+        }
+        else{
+
+        }
+    }
+    public void IncreViews2(final String evId) {
+//        final Context context = vv.getContext();
+//        final MainActivity mct;
         new Thread() {
             //        @Override
-            public void run(){
+            public void run() {
 
 
-                String path ="http://www.tukio.co.ke/applicationfiles/increaseeventviews.php?id="+evId;
+                String path = "http://www.tukio.co.ke/applicationfiles/increaseeventviews.php?id=" + evId;
                 URL u = null;
                 try {
                     u = new URL(path);
@@ -306,10 +252,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     in.read(buffer); // Read from Buffer.
                     bo.write(buffer); // Write Into Buffer.
 
-                    activity.runOnUiThread(new Runnable() {
+                    ((Activity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                                PopAccountDetails(returnedID);
+                            String ServerResponse = bo.toString();
+                            String response = ServerResponse.trim();
+
+                            ShowViewToast(response);
                             try {
                                 bo.close();
                             } catch (IOException e) {
@@ -320,47 +269,101 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }.start();
     }
-    public void addToCalender(String _edate2, String _eid, String evname) {
-        String new_event_id = "0";
-        //Read shared Pref
+    public void FavouriteEventOnServer(final String evId) {
         SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(context);
-        String stored_events_ids = pref1stRun.getString("myEvents", "");
+        final String uid = pref1stRun.getString("userId", "");
+        new Thread() {
+            //        @Override
+            public void run() {
 
-        if (stored_events_ids.contains(_eid)) {
-            Toast.makeText(context, "Event already exists in favourites", Toast.LENGTH_SHORT).show();
-            return;
+
+                String path = "http://www.tukio.co.ke/applicationfiles/insertfavouriteevent.php?eventid=" + evId+"&userid="+uid;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String ServerResponse = bo.toString();
+                            String response = ServerResponse.trim();
+
+                            ShowFavouriteToast(response);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void ShowFavouriteToast(String resp){
+        if (resp.contentEquals("event favourited")){
+            Toast.makeText(context, "Event added to favourites", Toast.LENGTH_SHORT).show();
         }
-        if (stored_events_ids.isEmpty()) {
-            new_event_id = _eid;
-
+        if (resp.contentEquals("exists")){
+            Toast.makeText(context, "Event already exists in favourites.", Toast.LENGTH_SHORT).show();
         }
-        if (!stored_events_ids.isEmpty()){
-            new_event_id = stored_events_ids + "," + _eid;
+//        else{
+//            Toast.makeText(context, "Not favourited.", Toast.LENGTH_SHORT).show();
+//        }
 
-        }
-        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = myPrefs.edit();
-        editor.putString("myEvents", new_event_id);
-        editor.apply();
-//        Snackbar();
-//        PostFavouriteToServer();
-//        Toast.makeText(context, "Added to Favouritedold: "+stored_events_ids+ "new: "+new_event_id, Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, "Added to Favourites", Toast.LENGTH_SHORT).show();
-
-
-
-
+    }
+    public void addToCalender(String _edate2, String _eid, String evname) {
+//        String new_event_id = "0";
+//        //Read shared Pref
+//        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(context);
+//        String stored_events_ids = pref1stRun.getString("myEvents", "");
+//
+//        if (stored_events_ids.contains(_eid)) {
+//            Toast.makeText(context, "Event already exists in favourites", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (stored_events_ids.isEmpty()) {
+//            new_event_id = _eid;
+//
+//        }
+//        if (!stored_events_ids.isEmpty()) {
+//            new_event_id = stored_events_ids + "," + _eid;
+//
+//        }
+//        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+//        SharedPreferences.Editor editor = myPrefs.edit();
+//        editor.putString("myEvents", new_event_id);
+//        editor.apply();
+////        Snackbar();
+////        PostFavouriteToServer();
+////        Toast.makeText(context, "Added to Favouritedold: "+stored_events_ids+ "new: "+new_event_id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Added to Favourites", Toast.LENGTH_SHORT).show();
 
 
         addToSystemCalendar(_edate2, evname); //add to system calendar
 
+        //set alarm
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
         notificationIntent.addCategory("android.intent.category.DEFAULT");
@@ -370,7 +373,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //time difference
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");    //Specify the data format
         Calendar calendar = Calendar.getInstance();
-        String fromDate =  df.format(calendar.getTime());
+        String fromDate = df.format(calendar.getTime());
         String toDate = _edate2;
         long diff = 0;
 
@@ -399,11 +402,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //Find number of days by dividing the mili seconds
 //        int diffInDays = (int) (diff / (24 * 60 * 60 * 1000));
-        int diffInHours = (int) (diff /(1000 * 60 * 60));
+        int diffInHours = (int) (diff / (1000 * 60 * 60));
 //        Toast.makeText(this, "Diff "+ diffInHours+" hours", Toast.LENGTH_SHORT).show();
-
-
-
 
 
         //set alarm
@@ -412,20 +412,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         cal.add(Calendar.HOUR, diffInHours);
 //        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
-//        Toast.makeText(context, "Added to reminder", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Added to alarm", Toast.LENGTH_SHORT).show();
 
     }
-    public void addToSystemCalendar(String _edate2, String evname){
-        long startTime=0,endTime;
+
+    public void addToSystemCalendar(String _edate2, String evname) {
+        long startTime = 0, endTime;
 
 //        String startDate = "2017-11-01";
         String startDate = _edate2;
 //        Toast.makeText(this, "Date "+_edate2, Toast.LENGTH_SHORT).show();
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-            startTime=date.getTime();
+            startTime = date.getTime();
+        } catch (Exception e) {
         }
-        catch(Exception e){ }
 
         Calendar cal = Calendar.getInstance();
         Intent intent = new Intent(Intent.ACTION_EDIT);
@@ -434,9 +435,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         intent.putExtra("beginTime", startTime);
         intent.putExtra("allDay", true);
 //        intent.putExtra("rrule", "FREQ=YEARLY");
-        intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-        intent.putExtra("title", "TUKIO EVENT: "+evname);
+        intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
+        intent.putExtra("title", "TUKIO EVENT: " + evname);
         context.startActivity(intent);
+    }
+
+    public void ShowViewToast(String response){
+        if (response.contentEquals("view registered")){
+            Toast.makeText(context, "Viewed", Toast.LENGTH_SHORT).show();
+        }
+//        else {
+//            Toast.makeText(context, "View not registered", Toast.LENGTH_SHORT).show();
+//        }
     }
 
 }

@@ -30,20 +30,19 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_corner"
-                android:clickable="true"
                 android:gravity="center"
                 android:textColor="#fff"
                 android:textSize="50sp"
                 android:textStyle="normal|bold"
                 app:custom_typeface="@string/font_segoue_bold" />
-            <ImageButton
+          <!--  <ImageButton
                 android:id="@+id/profImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:background="@null" />
+                android:background="@null" />-->
 
             <com.thebrownarrow.customfont.CustomFontTextView
                 android:id="@+id/username"
@@ -145,10 +144,22 @@
                     app:custom_typeface="@string/font_segoue_bold" />
 
             </LinearLayout>
-            <!-- <Space
+             <Space
                  android:layout_width="match_parent"
                  android:layout_height="15dp" />
-             <View
+            <com.thebrownarrow.customfont.CustomFontTextView
+                android:id="@+id/favouriteVenuesTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="#000"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                app:custom_typeface="@string/font_segoue_bold" />
+             <!--<View
                  android:layout_width="match_parent"
                  android:layout_marginLeft="6dp"
                  android:background="#a6a5a5"

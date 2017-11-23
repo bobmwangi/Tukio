@@ -1,5 +1,6 @@
 package ke.co.tukio.tukio;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +51,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager recyclerViewlayoutManager;
     RecyclerView.Adapter recyclerViewadapter;
+    ProgressDialog pDialog;
 
 //    String GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/fetcheventsjson.php";
     String JSON_EVENT_NAME = "event_name";
@@ -93,6 +101,18 @@ public class ReminderEventsActivity extends AppCompatActivity {
         FetchEventsFromServer();
     }
     public void FetchEventsFromServer(){
+        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
+        final String uid = pref1stRun.getString("userId", "");
+        if (uid.isEmpty()){
+            Toast.makeText(this, "Problem encountered. Please sign in", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/getfavouriteevents.php?uid="+uid.trim();
+//        String GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/fetcheventsjson.php";
+            JSON_DATA_WEB_CALL();
+        }
+    }
+    public void FetchEventsFromServer2(){
 
         SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
         String stored_events_ids = pref1stRun.getString("myEvents", "");
@@ -183,8 +203,15 @@ public class ReminderEventsActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
+
                 SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(ReminderEventsActivity.this);
+                String uid  = myPrefs.getString("userId", "");
+                deleteOnServer(uid);
                 SharedPreferences.Editor editor = myPrefs.edit();
+
+
+                editor.putString("count_favourite_events", "0");
+                editor.apply();
                 editor.putString("myEvents", "");
                 editor.putString("myVenues", "");
                 editor.apply();
@@ -219,5 +246,62 @@ public class ReminderEventsActivity extends AppCompatActivity {
     }
     public void AccDetails(View v){  //works for clicks from the BS
         Toast.makeText(ReminderEventsActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteOnServer(final String uid) {
+
+
+        new Thread() {
+            //        @Override
+            public void run() {
+
+
+
+
+                String path = "http://www.tukio.co.ke/applicationfiles/deletefavourites.php?userid=" + uid;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String response = bo.toString();
+                            String response2 = response.trim();
+
+
+                            ToastResults(response2);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void ToastResults(String resp){
+        if (resp.contentEquals("deleted")){
+            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "Deletion failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

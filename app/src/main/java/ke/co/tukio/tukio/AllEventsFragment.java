@@ -6,6 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,7 @@ public class AllEventsFragment extends Fragment {
 
     private RecyclerViewAdapter myAdapter;  // to solve No adapter attached; skipping layout in Staggered
 
+    public static final int DISMISS_TIMEOUT = 2000;
     ArrayList<GetDataAdapter> GetDataAdapter1;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager recyclerViewlayoutManager;
@@ -66,6 +69,7 @@ public class AllEventsFragment extends Fragment {
     String JSON_EVENT_EVTIME = "event_time";
     String JSON_EVENT_EVAGE = "age";
 
+    SwipyRefreshLayout mSwipyRefreshLayout;
 
     JsonArrayRequest jsonArrayRequest;
     RequestQueue requestQueue;
@@ -86,20 +90,6 @@ public class AllEventsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //manage onResume to stop running for the 1st time
-//        shouldExecuteOnResume = false;
-
-      /*  txt1 = (TextView) v.findViewById(R.id.buildafeedtext);
-        txt2 = (TextView) v.findViewById(R.id.Checktext);
-        txt3 = (TextView) v.findViewById(R.id.buildafeed);
-        btn1 = (Button) v.findViewById(R.id.buildafeedbtn);
-        img1 = (ImageView) v.findViewById(R.id.buildafeedimg);
-
-        txt1.setVisibility(View.GONE);
-        txt2.setVisibility(View.GONE);
-        txt3.setVisibility(View.GONE);
-        btn1.setVisibility(View.GONE);
-        img1.setVisibility(View.GONE);*/
 
         //recycler
         GetDataAdapter1 = new ArrayList<>();
@@ -108,8 +98,7 @@ public class AllEventsFragment extends Fragment {
         recyclerView.setItemAnimator(null); // solve scrroll issues
 
         //former functional staggered
-       // recyclerView       .setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));// Here 2 is no. of columns to be displayed
-
+        // recyclerView       .setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));// Here 2 is no. of columns to be displayed
 
 
 //        recyclerView.setLayoutManager(layoutManager);
@@ -129,23 +118,27 @@ public class AllEventsFragment extends Fragment {
 //        Connectivity();
         showEvents();
 
-        SwipyRefreshLayout mSwipyRefreshLayout = (SwipyRefreshLayout) v.findViewById(R.id.swipyrefreshlayout);
+   mSwipyRefreshLayout = (SwipyRefreshLayout) v.findViewById(R.id.swipyrefreshlayout);
         mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
 //                Toast.makeText(getContext(), "pull", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", "Refresh triggered at " + (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
+
                 Connectivity();
+//                mSwipyRefreshLayout.setRefreshing(false);
             }
         });
         return v;
     }
+// swipe to refresh start
 
+    // swipe to refresh stop
     public void showEvents() {
         ACache mCache = ACache.get(getActivity());
         JSONArray value2 = mCache.getAsJSONArray("tukio_events");
-        Toast.makeText(getActivity(), "Cached events: " + value2.length(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Saved events: " + value2.length(), Toast.LENGTH_SHORT).show();
 
         if (value2.length() == 0) {
             Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
@@ -162,6 +155,7 @@ public class AllEventsFragment extends Fragment {
 
         } else  //there is not internet, get Cached data
         {
+            Toast.makeText(getContext(), "No internet to refresh.", Toast.LENGTH_SHORT).show();
 //            Don't do anything
 //            ACache mCache = ACache.get(getActivity());
 //            JSONArray value2 = mCache.getAsJSONArray("tukio_events");
@@ -179,7 +173,8 @@ public class AllEventsFragment extends Fragment {
         jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                JSON_PARSE_DATA_AFTER_WEBCALL(response);
+              //  JSON_PARSE_DATA_AFTER_WEBCALL(response);
+                CacheData(response); //
             }
         },
                 new Response.ErrorListener() {
@@ -192,7 +187,7 @@ public class AllEventsFragment extends Fragment {
     }
 
     public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array) {
-        CacheData(array); //send data to the cache method
+//        CacheData(array); //send data to the cache method
         for (int i = 0; i < array.length(); i++) {
             GetDataAdapter GetDataAdapter2 = new GetDataAdapter();
             JSONObject json = null;
@@ -218,13 +213,33 @@ public class AllEventsFragment extends Fragment {
 //        recyclerViewadapter = new RecyclerViewAdapterGrid(GetDataAdapter1, getActivity());
         recyclerViewadapter = new RecyclerViewAdapter(GetDataAdapter1, getActivity());
         recyclerView.setAdapter(recyclerViewadapter);
+        //staggered
+        recyclerViewadapter.notifyDataSetChanged();
     }
 
     public void CacheData(JSONArray myArray) {  // method to cache data
         ACache mCache = ACache.get(getActivity());
-//        mCache.put("test_key", myArray, 30);
-        mCache.put("test_key", myArray);
-//        mCache.put("test_key3", "test value", 2 * ACache.TIME_DAY);  //2 days
+        mCache.put("tukio_events", myArray);
+        mSwipyRefreshLayout.setRefreshing(false);
+        Toast.makeText(getContext(), "Events saved", Toast.LENGTH_SHORT).show();
+        recyclerView.invalidate();
+        recyclerViewadapter.notifyDataSetChanged();
+        showEvents();
+//        FragmentManager fm = getFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        AllEventsFragment llf = new AllEventsFragment();
+//        ft.replace(R.id.frame_layout, llf);
+//        ft.commit();
+//        onCreate(new Bundle());
+//        getActivity().runOnUiThread(new Runnable() {
+//            public void run() {
+//                showEvents();
+//                recyclerView.invalidate();
+//                recyclerViewadapter.notifyDataSetChanged();
+//            }
+//            });
+//        recyclerView.invalidate();
+//        recyclerViewadapter.notifyDataSetChanged();
     }
 
 

@@ -1,89 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#96000000">
     <!--android:background="@drawable/blackbg">-->
 
 
     <com.thebrownarrow.customfont.CustomFontTextView
-        app:custom_typeface="@string/font_segoue_reg"
-        android:padding="10dp"
-android:id="@+id/green"
-        android:lineSpacingExtra="3dp"
+        android:id="@+id/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:lineSpacingExtra="3dp"
+        android:padding="10dp"
         android:text="Not kicking"
-      android:layout_alignParentTop="true"
-            android:textSize="20sp"
-        android:textColor="@color/notkicking" />
-        <com.thebrownarrow.customfont.CustomFontTextView
-            app:custom_typeface="@string/font_segoue_reg"
-            android:padding="10dp"
-            android:id="@+id/yellow"
-            android:layout_below="@+id/green"
-            android:lineSpacingExtra="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Slightly Kicking"
-            android:textSize="20sp"
-            android:textColor="@color/slightly" />
+        android:textColor="@color/notkicking"
+        android:textSize="20sp"
+        app:custom_typeface="@string/font_segoue_reg" />
+
     <com.thebrownarrow.customfont.CustomFontTextView
-            app:custom_typeface="@string/font_segoue_reg"
-            android:padding="10dp"
-            android:id="@+id/orange"
+        android:id="@+id/yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/green"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:lineSpacingExtra="3dp"
+        android:padding="10dp"
+        android:text="Slightly kicking"
+        android:textColor="@color/slightly"
+        android:textSize="20sp"
+        app:custom_typeface="@string/font_segoue_reg" />
+
+    <!--<com.thebrownarrow.customfont.CustomFontTextView
+        android:id="@+id/orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/yellow"
-            android:lineSpacingExtra="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Moderately Kicking"
-            android:textSize="20sp"
-            android:textColor="@color/moderate" />
-    <com.thebrownarrow.customfont.CustomFontTextView
-        app:custom_typeface="@string/font_segoue_reg"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:lineSpacingExtra="3dp"
         android:padding="10dp"
+        android:text="Moderately Kicking"
+        android:textColor="@color/moderate"
+        android:textSize="20sp"
+        app:custom_typeface="@string/font_segoue_reg" />-->
+
+    <com.thebrownarrow.customfont.CustomFontTextView
         android:id="@+id/orangered"
-        android:lineSpacingExtra="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/orange"
+        android:layout_below="@+id/yellow"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:lineSpacingExtra="3dp"
+        android:padding="10dp"
         android:text="Kicking"
+        android:textColor="@color/kicking"
         android:textSize="20sp"
-        android:textColor="@color/kicking" />
+        app:custom_typeface="@string/font_segoue_reg" />
+
     <com.thebrownarrow.customfont.CustomFontTextView
-        app:custom_typeface="@string/font_segoue_reg"
-        android:padding="10dp"
         android:id="@+id/red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/orangered"
-        android:lineSpacingExtra="3dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Lit"
-        android:textSize="20sp"
-        android:textColor="@color/lit" />
-
-
-   <!-- <com.thebrownarrow.customfont.CustomFontTextView
-        app:custom_typeface="@string/font_segoue_reg"
+        android:lineSpacingExtra="3dp"
         android:padding="10dp"
+        android:text="Lit"
+        android:textColor="@color/lit"
+        android:textSize="22sp"
+        app:custom_typeface="@string/font_segoue_bold" />
 
-        android:lineSpacingExtra="3dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Green - Not kicking\nYellow - Slightly Kicking\nOrange - Moderately Kicking\nOrange Red - Kicking\nRed - Lit"
-        android:textSize="20sp"
-        android:textColor="#ffffff" />-->
+
+    <!-- <com.thebrownarrow.customfont.CustomFontTextView
+         app:custom_typeface="@string/font_segoue_reg"
+         android:padding="10dp"
+
+         android:lineSpacingExtra="3dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_centerVertical="true"
+         android:text="Green - Not kicking\nYellow - Slightly Kicking\nOrange - Moderately Kicking\nOrange Red - Kicking\nRed - Lit"
+         android:textSize="20sp"
+         android:textColor="#ffffff" />-->
 </RelativeLayout>

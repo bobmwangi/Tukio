@@ -3,10 +3,11 @@ package ke.co.tukio.tukio.recycler;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
@@ -68,29 +68,47 @@ public class RecyclerViewAdapterVen extends RecyclerView.Adapter<RecyclerViewAda
 //        Viewholder.networkImageView.setImageUrl(getDataAdapter3.getImageServerUrl(), imageLoader1);
 //        Viewholder.venImageView.setImageResource(R.drawable.venue_fire_white);//.setImageUrl(getDataAdapter3.getImageServerUrl(), imageLoader1);
 //CHANGE COLOURS
-        Bitmap mFinalBitmap;
+        Bitmap mFinalBitmap = null;
         int mColorCode=0;
 
-        int kickV = Integer.parseInt(getDataAdapter3.getVenId());
+//        int kickV = Integer.parseInt(getDataAdapter3.getVenId());
+        int kickV = Integer.parseInt(getDataAdapter3.getKicko());
 
-        if(kickV ==0){
-            mColorCode = Color.parseColor("#32cd32");
+        if(kickV <0){
+            mColorCode = ContextCompat.getColor(context, R.color.black);
+            Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+            Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+            mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
+//            return;
         }
-        if(kickV >0 && kickV<10){
-            mColorCode = Color.parseColor("#ffc125");
+        if(kickV ==0 && kickV<10){
+            mColorCode = ContextCompat.getColor(context, R.color.notkicking);
+            Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+            Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+            mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
         }
         if(kickV >10 && kickV<25){
-            mColorCode = Color.parseColor("#ff7f00");
+            mColorCode = ContextCompat.getColor(context, R.color.slightly);
+            Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+            Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+            mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
         }
         if(kickV >25 && kickV<50){
-            mColorCode = Color.parseColor("#32cd32");
+            mColorCode = ContextCompat.getColor(context, R.color.kicking);
+            Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+            Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+            mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
         }
         if(kickV >=50){
-            mColorCode = Color.parseColor("#ee0000");
+            mColorCode = ContextCompat.getColor(context, R.color.lit);
+            Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+            Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+            mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
         }
-        Drawable sourceDrawable = context.getResources().getDrawable(R.drawable.venue_fire_white);
-        Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
-        mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
+//        Drawable sourceDrawable = context.getResources().getDrawable(R.drawable.venue_fire_white);
+//        Drawable sourceDrawable  = ResourcesCompat.getDrawable(context.getResources(), R.drawable.venue_fire_white, null);
+//        Bitmap sourceBitmap = UtilsColor.convertDrawableToBitmap(sourceDrawable);
+//        mFinalBitmap = UtilsColor.changeImageColor(sourceBitmap, mColorCode);
 //        venImageView.setImageBitmap(mFinalBitmap);
 
         Viewholder.venImageView.setImageBitmap(mFinalBitmap);

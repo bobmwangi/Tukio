@@ -2,9 +2,11 @@ package ke.co.tukio.tukio;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +38,7 @@ import ke.co.tukio.tukio.recycler.RecyclerViewAdapter;
 
 
 public class FavouriteEventsFragment extends Fragment {
-TextView txt1,noFavourite, txt2, txt3;
+    TextView txt1, noFavourite, txt2, txt3;
     Button btn1;
     ImageView img1;
 
@@ -110,35 +112,69 @@ TextView txt1,noFavourite, txt2, txt3;
     }
 
 
-    public void showEvents(){
+    public void showEvents() {
+        String fav_ev;
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        fav_ev = myPrefs.getString("fav_events_exists", "");
+//        Toast.makeText(getContext(), "Status: " + fav_ev, Toast.LENGTH_SHORT).show();
+
         ACache mCache = ACache.get(getActivity());
         JSONArray value2 = mCache.getAsJSONArray("tukio_favourite_events");
 
         try {
-            if(value2.equals(null)){
-                Toast.makeText(getActivity(), "No favourite venue", Toast.LENGTH_SHORT).show();
-                noFavourite.setVisibility(View.VISIBLE);
-                return;
+
+            if (!value2.equals(null)) {  //not null
+                JSON_PARSE_CACHED_DATA(value2);
+                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
             }
-            else if (!value2.equals(null)){
-//                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
+            if(value2.length()<1){
+                Toast.makeText(getActivity(), "No favs", Toast.LENGTH_SHORT).show();
             }
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             noFavourite.setVisibility(View.VISIBLE);
 //            Toast.makeText(this, "No previous kicks", Toast.LENGTH_SHORT).show();
 //            CheckNetKick();
-        return;
+            return;
         }
 
 
-        if (value2.length()==0){
+    }
+
+
+    public void showEvents2() {
+        ACache mCache = ACache.get(getActivity());
+        JSONArray value2 = mCache.getAsJSONArray("tukio_favourite_events");
+
+        try {
+            if (value2.equals(null)) {
+                Toast.makeText(getActivity(), "No favourite venue", Toast.LENGTH_SHORT).show();
+                noFavourite.setVisibility(View.VISIBLE);
+//                return;
+            }
+            if (value2.length() < 1) {
+                Toast.makeText(getActivity(), "No favourite venue 2", Toast.LENGTH_SHORT).show();
+                noFavourite.setVisibility(View.VISIBLE);
+//                return;
+            }
+//            else if (!value2.equals(null)){
+////                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
+//            }
+        } catch (NullPointerException e) {
+            noFavourite.setVisibility(View.VISIBLE);
+//            Toast.makeText(this, "No previous kicks", Toast.LENGTH_SHORT).show();
+//            CheckNetKick();
+            return;
+        }
+
+
+        if (value2.length() == 0) {
             Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             JSON_PARSE_CACHED_DATA(value2);
         }
     }
-    public void Connectivity(){
+
+    public void Connectivity() {
         ConnectivityManager cn = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
@@ -149,12 +185,11 @@ TextView txt1,noFavourite, txt2, txt3;
             ACache mCache = ACache.get(getActivity());
 //    String value = mCache.getAsString("test_key");
             JSONArray value2 = mCache.getAsJSONArray("tukio_events");
-            Toast.makeText(getActivity(), "Cached events: "+value2.length(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Cached events: " + value2.length(), Toast.LENGTH_SHORT).show();
 
-            if (value2.length()==0){
+            if (value2.length() == 0) {
                 Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 JSON_PARSE_CACHED_DATA(value2);
             }
         }
@@ -162,11 +197,11 @@ TextView txt1,noFavourite, txt2, txt3;
 
     public void JSON_DATA_WEB_CALL() {
         jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
-                    }
-                },
+            @Override
+            public void onResponse(JSONArray response) {
+                JSON_PARSE_DATA_AFTER_WEBCALL(response);
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -203,7 +238,7 @@ TextView txt1,noFavourite, txt2, txt3;
         recyclerView.setAdapter(recyclerViewadapter);
     }
 
-    public void CacheData(JSONArray myArray){  // method to cache data
+    public void CacheData(JSONArray myArray) {  // method to cache data
         ACache mCache = ACache.get(getActivity());
 //        mCache.put("test_key", myArray, 30);
         mCache.put("test_key", myArray);
@@ -225,7 +260,7 @@ TextView txt1,noFavourite, txt2, txt3;
                 GetDataAdapter2.setevId(json.getString(JSON__EVENT_ID));
                 GetDataAdapter2.setevDesc(json.getString(JSON_EVENT_DESC));
                 GetDataAdapter2.setevViews(json.getString(JSON_EVENT_VIEWS));
-              GetDataAdapter2.setImageServerUrl(json.getString(JSON_IMAGE_URL));
+                GetDataAdapter2.setImageServerUrl(json.getString(JSON_IMAGE_URL));
                 GetDataAdapter2.setevTime(json.getString(JSON_EVENT_EVTIME));
                 GetDataAdapter2.setEvAge(json.getString(JSON_EVENT_EVAGE));
             } catch (JSONException e) {

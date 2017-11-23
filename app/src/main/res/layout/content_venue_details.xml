@@ -42,15 +42,40 @@
             android:gravity="center"
             android:layout_marginBottom="10dp"/>
         <com.thebrownarrow.customfont.CustomFontTextView
+        app:custom_typeface="@string/font_segoue_reg"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:drawableLeft="@drawable/ic_action_place"
+        android:id="@+id/venueLocation"
+        android:typeface="normal"
+        android:gravity="center"
+            android:layout_marginBottom="10dp"
+        android:textColor="#000" />
+        <com.thebrownarrow.customfont.CustomFontTextView
             app:custom_typeface="@string/font_segoue_reg"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:drawableLeft="@drawable/ic_action_place"
-            android:id="@+id/venueLocation"
+            android:drawableLeft="@drawable/ic_action_rating"
+            android:id="@+id/venueRating"
             android:typeface="normal"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textColor="#e00" />
+        <com.thebrownarrow.customfont.CustomFontTextView
+            app:custom_typeface="@string/font_segoue_reg"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:lineSpacingExtra="3dp"
+            android:id="@+id/venueDesc"
             android:gravity="center"
             android:textColor="#000" />
     <!--        android:textColor="#f00" />
@@ -119,6 +144,16 @@
                 android:gravity="left"
                 android:textColor="#000" />
         </LinearLayout>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/VenueLat"
+            android:visibility="gone"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/VenueLong"
+            android:visibility="gone"
+            android:layout_height="match_parent" />
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/VenueId"

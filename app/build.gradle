@@ -80,8 +80,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     //bottomsheet
-    compile 'com.cocosw:bottomsheet:1.+@aar'
+//    compile 'com.cocosw:bottomsheet:1.+@aar'   //Removed, used default Bottom Sheet
 
+    //map route
+    compile 'com.github.ar-android:DrawRouteMaps:1.0.0'
     //ripple effect - didnt work
 //    compile 'com.github.traex.rippleeffect:library:1.2.3'
 

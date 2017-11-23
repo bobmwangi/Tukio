@@ -90,7 +90,7 @@ public class SignupActivity extends AppCompatActivity implements
     String publicjson = "nothing";
     MainActivity myMainActy;
     EditText editEmail, editName;
-    ProgressDialog pDialog;
+    ProgressDialog pDialog, pDialogSend;
     TextView mStatusTextView;
     String MyREsponseFromphp, firebToken = "empty";
 
@@ -402,11 +402,11 @@ public class SignupActivity extends AppCompatActivity implements
             fbToken = myPrefs.getString("firebaseToken", "");
             Toast.makeText(this, "token " + fbToken, Toast.LENGTH_SHORT).show();
 
-            pDialog = new ProgressDialog(SignupActivity.this);
-            pDialog.setMessage("Sending...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+            pDialogSend = new ProgressDialog(SignupActivity.this);
+            pDialogSend.setMessage("Sending...");
+            pDialogSend.setIndeterminate(false);
+            pDialogSend.setCancelable(true);
+            pDialogSend.show();
             insertToDatabase(uname, uemail, fbToken, "app");
         }
     }
@@ -472,7 +472,7 @@ public class SignupActivity extends AppCompatActivity implements
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                pDialog.dismiss();
+                pDialogSend.dismiss();
                 if (MyREsponseFromphp.contentEquals("Account created")) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignupActivity.this);
                     alertDialog.setTitle("Success");
@@ -487,19 +487,19 @@ public class SignupActivity extends AppCompatActivity implements
                             });
 
                     alertDialog.show();
-                    pDialog.dismiss();
+
 //                    editName.setText("");
 //                    editEmail.setText("");
                 } else if (MyREsponseFromphp.contentEquals("Failed to create account")) {
                     Toast.makeText(SignupActivity.this, " Failed to create account", Toast.LENGTH_SHORT).show();
-                    pDialog.dismiss();
+
 
                 } else if (MyREsponseFromphp.contentEquals("Account exists")) {
                     Toast.makeText(SignupActivity.this, "Account exists. Recovering account.", Toast.LENGTH_SHORT).show();
                     QueryId();
                 } else {
                     Toast.makeText(SignupActivity.this, "No response.", Toast.LENGTH_SHORT).show();
-                    pDialog.dismiss();
+
                 }
 
                 //  setProgressBarVisibility(false);
@@ -665,7 +665,7 @@ public class SignupActivity extends AppCompatActivity implements
 
                 }
             });
-
+alertDialog.show();
 
         }
     }

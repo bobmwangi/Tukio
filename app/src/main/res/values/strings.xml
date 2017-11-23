@@ -8,8 +8,10 @@
 
     <string name="reg_man">Become a manager</string>
     <string name="settings">Settings</string>
+    <string name="route">Route</string>
     <string name="reminder_activity">My events</string>
-     <string name="trending">Trending</string>
+    <string name="fav_venues">My venues</string>
+    <string name="trending">Trending</string>
 
     <string name="trending_bottom">Trending</string>
     <string name="events_details">About Event</string>
