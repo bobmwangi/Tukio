@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -83,6 +85,7 @@ public class SplashActivity extends AppCompatActivity {
 //        if (nf != null && nf.isConnected() == true) {
 
 
+        ResumeProfilePicture();//Checks if user had a profile pic on the Share Pref, if one existed, it will be pushed to ACache and later on displayed on profile tab
         CheckConnectivity checkNetwork = new CheckConnectivity();
         if (checkNetwork.isConnected(SplashActivity.this)) {
             UserLogChecks();
@@ -172,9 +175,9 @@ public class SplashActivity extends AppCompatActivity {
         if (resp.contentEquals("log registered")) {
             ACache mCache = ACache.get(SplashActivity.this);
             mCache.put("userlog", "userlogged", 60);
-            Toast.makeText(this, "Log registered", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Log registered", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "log registration failed", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "log registration failed", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -186,7 +189,6 @@ public class SplashActivity extends AppCompatActivity {
         if (FirstRunStatus.contentEquals("yes")) {
 //            Toast.makeText(this, "first run: "+FirstRunStatus, Toast.LENGTH_SHORT).show();
             Intent ff = new Intent(getBaseContext(), MainActivity.class);
-//            Intent ff = new Intent(getBaseContext(), SignUpActivity2.class);  //09-11-2017
             startActivityForResult(ff, 0);
             finish();
         } else
@@ -304,7 +306,7 @@ public class SplashActivity extends AppCompatActivity {
                 fos.write(publicjson.getBytes());
                 fos.close();
 
-                Toast.makeText(getApplicationContext(), "Map data saved.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Map data saved.", Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -345,7 +347,7 @@ public class SplashActivity extends AppCompatActivity {
         final String uid = pref1stRun.getString("userId", "");
         final String firstrun = pref1stRun.getString("firstrun", "");
         if (firstrun.contentEquals("yes")) {
-            Toast.makeText(this, "Fetching events from favourite venues", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Fetching events from favourite venues", Toast.LENGTH_SHORT).show();
             String FavVenEventsURL = "http://tukio.co.ke/applicationfiles/geteventsfromfavouritevenues.php?uid=" + uid;
 
             jsonArrayRequest = new JsonArrayRequest(FavVenEventsURL, new Response.Listener<JSONArray>() {
@@ -354,11 +356,11 @@ public class SplashActivity extends AppCompatActivity {
 //                    CacheFavouriteEvents(response);
 
                     if(response.length()>0){
-                        Toast.makeText(SplashActivity.this, "Response exist", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SplashActivity.this, "Response exist", Toast.LENGTH_SHORT).show();
                         CacheFavouriteEvents(response);
                     }
                     else{
-                        Toast.makeText(SplashActivity.this, "User has no favourite venues", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SplashActivity.this, "User has no favourite venues", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -412,7 +414,7 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = myPrefs.edit();
         editor.putString("fav_events_exists", "yes");
         editor.apply();
-        Toast.makeText(this, "Saved fav events", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Saved fav events", Toast.LENGTH_SHORT).show();
     }
     public void CountFavouriteEvents() {
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -517,6 +519,30 @@ public void ShowCount(String count){
         SharedPreferences.Editor editor = myPrefs.edit();
         editor.putString("count_favourite_venues", vcount);
         editor.apply();
+    }
+
+    public void ResumeProfilePicture(){
+        String picStatus, profBase64String;
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        picStatus = myPrefs.getString("saved_profile_picture", "");
+
+        if (picStatus.contentEquals("yes")) {
+            Toast.makeText(this, "Picture exists "+picStatus, Toast.LENGTH_SHORT).show();
+            profBase64String = myPrefs.getString("profile_picture", "");
+
+            //decode from B64 to Bitmap. Save Bitmap in Acache
+            byte[] decodedByte = Base64.decode(profBase64String, 0);
+            ACache mCache = ACache.get(SplashActivity.this);
+            mCache.put("profile_picture", decodedByte);
+
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putString("saved_profile_picture", "");  //delete this. It won't happen again until user logs out
+            editor.apply();
+        } else{
+            Toast.makeText(this, "No saved pof pic.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 }
 

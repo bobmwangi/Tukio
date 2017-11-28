@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.location.Location;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class MapRouteActivity extends AppCompatActivity implements OnMapReadyCal
     //anime
     private Circle lastUserCircle;
     private static final long PULSE_DURATION = 4000;
-    private static final float RADIUS = 1500.0f;
+    private static final float RADIUS = 250.0f;
     private ValueAnimator lastPulseAnimator;
 
     private GoogleMap mMap;
@@ -59,6 +60,7 @@ public class MapRouteActivity extends AppCompatActivity implements OnMapReadyCal
         longi= i.getStringExtra("long");
         vname = i.getStringExtra("vname");
         getSupportActionBar().setTitle(vname);
+
         Dlat = Double.parseDouble(lati);
         Dlong = Double.parseDouble(longi);
 
@@ -69,6 +71,18 @@ public class MapRouteActivity extends AppCompatActivity implements OnMapReadyCal
             //your actual location old code till 04-11-17
              myLat = gpsTracker.getLatitude();
              myLong = gpsTracker.getLongitude();
+
+            Location myLoc =new Location("");
+            Location venuesLoc =new Location("");
+            myLoc.setLatitude(myLat);
+            myLoc.setLongitude(myLong);
+            venuesLoc.setLatitude(Dlat);
+            venuesLoc.setLongitude(Dlong);
+
+            //distance btwn your location and nearest venue
+            float distancebtw=myLoc.distanceTo(venuesLoc );
+            float dist2 = distancebtw/1000;
+            getSupportActionBar().setSubtitle(dist2+" km away");
             mapFragment.getMapAsync(this);
         }
         else{
@@ -116,7 +130,8 @@ public class MapRouteActivity extends AppCompatActivity implements OnMapReadyCal
                     .include(destination).build();
             Point displaySize = new Point();
             getWindowManager().getDefaultDisplay().getSize(displaySize);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 10));
         }
 
     protected ValueAnimator valueAnimate(float radius, ValueAnimator.AnimatorUpdateListener updateListener){

@@ -2,9 +2,11 @@ package ke.co.tukio.tukio;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -138,7 +140,7 @@ public class AllEventsFragment extends Fragment {
     public void showEvents() {
         ACache mCache = ACache.get(getActivity());
         JSONArray value2 = mCache.getAsJSONArray("tukio_events");
-        Toast.makeText(getActivity(), "Saved events: " + value2.length(), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getActivity(), "Saved events: " + value2.length(), Toast.LENGTH_SHORT).show();
 
         if (value2.length() == 0) {
             Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
@@ -155,7 +157,10 @@ public class AllEventsFragment extends Fragment {
 
         } else  //there is not internet, get Cached data
         {
-            Toast.makeText(getContext(), "No internet to refresh.", Toast.LENGTH_SHORT).show();
+            mSwipyRefreshLayout.setRefreshing(false);
+            Snackbar.make(getActivity().findViewById(android.R.id.content),
+                    "No internet connection!", Snackbar.LENGTH_LONG).show();
+           // Toast.makeText(getContext(), "No internet to refresh.", Toast.LENGTH_SHORT).show();
 //            Don't do anything
 //            ACache mCache = ACache.get(getActivity());
 //            JSONArray value2 = mCache.getAsJSONArray("tukio_events");
@@ -221,10 +226,13 @@ public class AllEventsFragment extends Fragment {
         ACache mCache = ACache.get(getActivity());
         mCache.put("tukio_events", myArray);
         mSwipyRefreshLayout.setRefreshing(false);
-        Toast.makeText(getContext(), "Events saved", Toast.LENGTH_SHORT).show();
-        recyclerView.invalidate();
-        recyclerViewadapter.notifyDataSetChanged();
-        showEvents();
+//        Toast.makeText(getContext(), "Events saved", Toast.LENGTH_SHORT).show();
+        reOpenFrag(); //reopen this fragment
+
+
+//        recyclerView.invalidate();
+//        recyclerViewadapter.notifyDataSetChanged();
+//        showEvents();
 //        FragmentManager fm = getFragmentManager();
 //        FragmentTransaction ft = fm.beginTransaction();
 //        AllEventsFragment llf = new AllEventsFragment();
@@ -271,6 +279,26 @@ public class AllEventsFragment extends Fragment {
 
         //staggered
         recyclerViewadapter.notifyDataSetChanged();
+    }
+
+    public void reOpenFrag() {
+        Intent pIntent = new Intent(getActivity(), MainActivity.class);
+        startActivityForResult(pIntent, 0);
+//        Toast.makeText(getContext(), "Open", Toast.LENGTH_SHORT).show();
+
+    }
+    public void reOpenFrag3() {
+        // Create new fragment and transaction
+        Fragment newFragment = new AllEventsFragment();
+//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment, and add the transaction to the back stack
+        transaction.replace(R.id.frame_layout, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
 }

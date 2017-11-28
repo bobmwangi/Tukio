@@ -3,7 +3,7 @@ package ke.co.tukio.tukio.recycler;
 public class GetDataAdapter {
 
     public String ImageServerUrl;
-    public String evDesc, evName, evDate, evDate2, evVenue, evVenueid, evId, evViews, evTime, evAge,evTicks;
+    public String evDesc, evName, evDate, evDate2, evVenue, evVenueid, evId, evViews, evTime, evAge,evTicks, evRemId;
 
     public String getImageServerUrl() {
         return ImageServerUrl;
@@ -21,6 +21,13 @@ public class GetDataAdapter {
         this.evName = evName;
     }
 
+    //ID
+    public String getevRemId() {
+        return evRemId;
+    }
+    public void setevRemId(String evRemId) {
+        this.evRemId = evRemId;
+    }
     //ID
     public String getevId() {
         return evId;

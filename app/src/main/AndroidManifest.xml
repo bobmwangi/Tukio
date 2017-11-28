@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ke.co.tukio.tukio">
 
-    <uses-sdk tools:overrideLibrary="test.jinesh.lib, com.ahmadrosid.lib.drawroutemap" />
+    <uses-sdk tools:overrideLibrary="test.jinesh.lib, com.ahmadrosid.lib.drawroutemap, com.yashoid.instacropper" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".app.AppController"
@@ -91,8 +92,11 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".FavouriteVenuesActivity"
-            android:noHistory="true"
             android:label="@string/fav_venues"
+            android:noHistory="true"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".ProfilePictureActivity"
+            android:label="@string/prof_pic"
             android:parentActivityName=".MainActivity" ></activity>
     </application>
 

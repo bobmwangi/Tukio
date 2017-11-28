@@ -253,7 +253,7 @@ public class PlacesFragment extends Fragment implements OnMapReadyCallback {
 //end user location
 
         //style the map
-        mMap.setMapStyle(googleMapStyler.getMapStyleOptions());
+      //  mMap.setMapStyle(googleMapStyler.getMapStyleOptions());  //27-11-2017
 
         try {
             JSONArray jsonArray = new JSONArray(publicjson);

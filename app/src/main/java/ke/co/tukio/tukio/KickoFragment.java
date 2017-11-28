@@ -281,7 +281,7 @@ checkCacheToSetButtonBackground();
             if (!String.valueOf(latitude).contentEquals("0.0") || !String.valueOf(longitude).contentEquals("0.0")){
                 LATserver = String.valueOf(latitude);
                 LONGserver = String.valueOf(longitude);
-                Toast.makeText(getActivity(), "Proceed "+ LATserver+" "+LONGserver, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Proceed "+ LATserver+" "+LONGserver, Toast.LENGTH_SHORT).show();
 //                sendToServer(String.valueOf(latitude), String.valueOf(longitude));
                 new DistanceAnalysis().execute();
             }
@@ -314,7 +314,8 @@ checkCacheToSetButtonBackground();
             */
 
             //START
-            loctxtv.setText("Your location: " + latitude +", " + longitude);
+//            loctxtv.setText("Your location: " + latitude +", " + longitude);
+            loctxtv.setVisibility(View.GONE);
             searchMsgTV.setText("Searching for nearby venues.");
 
             DecimalFormat fmt = new DecimalFormat("#,###,###");

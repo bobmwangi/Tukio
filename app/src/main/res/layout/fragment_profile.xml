@@ -35,14 +35,14 @@
                 android:textSize="50sp"
                 android:textStyle="normal|bold"
                 app:custom_typeface="@string/font_segoue_bold" />
-          <!--  <ImageButton
+            <ImageButton
                 android:id="@+id/profImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
                 android:clickable="true"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:background="@null" />-->
+                android:background="@null" />
 
             <com.thebrownarrow.customfont.CustomFontTextView
                 android:id="@+id/username"
@@ -135,7 +135,6 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="reminders"
                     android:padding="8dp"
                     android:textColor="#000"
                     android:textSize="21sp"

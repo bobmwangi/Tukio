@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ke.co.tukio.tukio.FavouriteVenuesActivity">
+<!--    <item
+        android:id="@+id/viewVenue"
+        android:icon="@drawable/ic_action_venue_white_menu"
+        android:title="View Venue"
+        app:showAsAction="always" />-->
+    <item
+        android:id="@+id/DELETEFavourites"
+        android:icon="@drawable/ic_action_clear_black"
+        android:title="Clear favourites"
+        app:showAsAction="always" />
+
+
+</menu>
+
+
+
+

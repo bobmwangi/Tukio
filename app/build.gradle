@@ -79,6 +79,9 @@ dependencies {
     //multidex for Kingara - Android<5.0
     compile 'com.android.support:multidex:1.0.1'
 
+
+    //to crop pictures - 23-11-2017
+    compile 'com.yashoid:instacropper:1.0.6'
     //bottomsheet
 //    compile 'com.cocosw:bottomsheet:1.+@aar'   //Removed, used default Bottom Sheet
 

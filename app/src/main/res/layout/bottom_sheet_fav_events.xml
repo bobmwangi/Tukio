@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        android:id="@+id/eventTitleBS"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="8sp"
+        android:textColor="#f00"
+        android:textSize="20sp"
+        android:typeface="normal"
+        app:custom_typeface="@string/font_segoue_bold" />
+
+    <LinearLayout
+        android:id="@+id/aboutBSLin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_about_bs" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/aboutBS"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+           android:text="About"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_date" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/dateBS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="Date"
+            android:textColor="#666"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_time"
+            android:id="@+id/imageView2" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/timeBS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="Time"
+            android:textColor="#666"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+
+            android:src="@drawable/ic_action_p_age" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/ageBS"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="Age"
+            android:textColor="#666"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_views" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/seenByBS"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="Seen by"
+            android:textColor="#666"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5sp"
+        android:background="#c3666666" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_venue" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/viewVenBS"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="View venue"
+            android:textColor="#3980eb"
+            android:textSize="18sp"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_action_remove"
+            android:id="@+id/imag3" />
+
+        <com.thebrownarrow.customfont.CustomFontTextView
+            android:id="@+id/deleteEvent"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15sp"
+            android:gravity="center_vertical"
+            android:text="Remove from favourites"
+            android:textColor="#e00"
+            android:textSize="18sp"
+            android:typeface="normal"
+            app:custom_typeface="@string/font_segoue_reg" />
+    </LinearLayout>
+
+
+</LinearLayout>

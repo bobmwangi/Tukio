@@ -400,7 +400,7 @@ public class SignupActivity extends AppCompatActivity implements
         } else {
             SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
             fbToken = myPrefs.getString("firebaseToken", "");
-            Toast.makeText(this, "token " + fbToken, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "token " + fbToken, Toast.LENGTH_SHORT).show();
 
             pDialogSend = new ProgressDialog(SignupActivity.this);
             pDialogSend.setMessage("Sending...");
@@ -644,7 +644,7 @@ public class SignupActivity extends AppCompatActivity implements
             editName.setText("");
             editEmail.setText("");
 
-            Toast.makeText(SignupActivity.this, "Login details saved: " + returnedID + " " + username, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SignupActivity.this, "Login details saved: " + returnedID + " " + username, Toast.LENGTH_SHORT).show();
 
 
             Intent pIntent = new Intent(getBaseContext(), MainActivity.class);

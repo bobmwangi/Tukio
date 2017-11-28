@@ -2,15 +2,18 @@ package ke.co.tukio.tukio;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +27,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import org.afinal.simplecache.ACache;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +58,7 @@ public class FavouriteEventsFragment extends Fragment {
     RecyclerView.LayoutManager recyclerViewlayoutManager;
     RecyclerView.Adapter recyclerViewadapter;
 
-    String GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/fetcheventsjson.php";
+   // String GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/fetcheventsjson.php";
     String JSON_EVENT_NAME = "event_name";
     String JSON_EVENT_DATE = "event_date";
     String JSON_EVENT_DATE2 = "event_date_two";
@@ -59,6 +70,8 @@ public class FavouriteEventsFragment extends Fragment {
     String JSON_EVENT_DESC = "event_details";
     String JSON_EVENT_EVTIME = "event_time";
     String JSON_EVENT_EVAGE = "age";
+
+    SwipyRefreshLayout mSwipyRefreshLayout;
 
 
     JsonArrayRequest jsonArrayRequest;
@@ -79,21 +92,6 @@ public class FavouriteEventsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //manage onResume to stop running for the 1st time
-//        shouldExecuteOnResume = false;
-
-      /*  txt1 = (TextView) v.findViewById(R.id.buildafeedtext);
-        txt2 = (TextView) v.findViewById(R.id.Checktext);
-        txt3 = (TextView) v.findViewById(R.id.buildafeed);
-        btn1 = (Button) v.findViewById(R.id.buildafeedbtn);
-        img1 = (ImageView) v.findViewById(R.id.buildafeedimg);
-
-        txt1.setVisibility(View.GONE);
-        txt2.setVisibility(View.GONE);
-        txt3.setVisibility(View.GONE);
-        btn1.setVisibility(View.GONE);
-        img1.setVisibility(View.GONE);*/
-
         //recycler
         GetDataAdapter1 = new ArrayList<>();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerview1);
@@ -106,8 +104,20 @@ public class FavouriteEventsFragment extends Fragment {
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
 
         noFavourite = (TextView) v.findViewById(R.id.noFavTxt);
-//        Connectivity();
-        showEvents();
+        CheckFavVenuesCount(); // if count = 0, then user has not favourited any venues, will ssho no favs textView
+//        showEvents();  // removed 28-11-2017 To be only checked if Count isn't 0
+
+
+        //swipe
+        mSwipyRefreshLayout = (SwipyRefreshLayout) v.findViewById(R.id.swipyrefreshlayout);
+        mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+
+                Log.d("MainActivity", "Refresh triggered at " + (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
+                Connectivity();
+            }
+        });
         return v;
     }
 
@@ -125,15 +135,13 @@ public class FavouriteEventsFragment extends Fragment {
 
             if (!value2.equals(null)) {  //not null
                 JSON_PARSE_CACHED_DATA(value2);
-                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
             }
             if(value2.length()<1){
-                Toast.makeText(getActivity(), "No favs", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "No favourites", Toast.LENGTH_SHORT).show();
             }
         } catch (NullPointerException e) {
-            noFavourite.setVisibility(View.VISIBLE);
 //            Toast.makeText(this, "No previous kicks", Toast.LENGTH_SHORT).show();
-//            CheckNetKick();
             return;
         }
 
@@ -141,66 +149,33 @@ public class FavouriteEventsFragment extends Fragment {
     }
 
 
-    public void showEvents2() {
-        ACache mCache = ACache.get(getActivity());
-        JSONArray value2 = mCache.getAsJSONArray("tukio_favourite_events");
 
-        try {
-            if (value2.equals(null)) {
-                Toast.makeText(getActivity(), "No favourite venue", Toast.LENGTH_SHORT).show();
-                noFavourite.setVisibility(View.VISIBLE);
-//                return;
-            }
-            if (value2.length() < 1) {
-                Toast.makeText(getActivity(), "No favourite venue 2", Toast.LENGTH_SHORT).show();
-                noFavourite.setVisibility(View.VISIBLE);
-//                return;
-            }
-//            else if (!value2.equals(null)){
-////                Toast.makeText(getActivity(), "Cached favourite events: "+value2.length(), Toast.LENGTH_SHORT).show();
-//            }
-        } catch (NullPointerException e) {
-            noFavourite.setVisibility(View.VISIBLE);
-//            Toast.makeText(this, "No previous kicks", Toast.LENGTH_SHORT).show();
-//            CheckNetKick();
-            return;
-        }
-
-
-        if (value2.length() == 0) {
-            Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
-        } else {
-            JSON_PARSE_CACHED_DATA(value2);
-        }
-    }
 
     public void Connectivity() {
         ConnectivityManager cn = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
             JSON_DATA_WEB_CALL();  //there is internet, Get new data
+            getFavVenuesCount();
 
         } else  //there is not internet, get Cached data
         {
-            ACache mCache = ACache.get(getActivity());
-//    String value = mCache.getAsString("test_key");
-            JSONArray value2 = mCache.getAsJSONArray("tukio_events");
-            Toast.makeText(getActivity(), "Cached events: " + value2.length(), Toast.LENGTH_SHORT).show();
-
-            if (value2.length() == 0) {
-                Toast.makeText(getActivity(), "No cached data", Toast.LENGTH_SHORT).show();
-            } else {
-                JSON_PARSE_CACHED_DATA(value2);
-            }
+            mSwipyRefreshLayout.setRefreshing(false);
+            Snackbar.make(getActivity().findViewById(android.R.id.content),
+                    "No internet connection!", Snackbar.LENGTH_LONG).show();
         }
     }
 
     public void JSON_DATA_WEB_CALL() {
+        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final String uid = pref1stRun.getString("userId", "");
+      String GET_JSON_DATA_HTTP_URL=  "http://tukio.co.ke/applicationfiles/geteventsfromfavouritevenues.php?uid=" + uid;
         jsonArrayRequest = new JsonArrayRequest(GET_JSON_DATA_HTTP_URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                JSON_PARSE_DATA_AFTER_WEBCALL(response);
-            }
+                CacheData(response);  // cache this response
+
+        }
         },
                 new Response.ErrorListener() {
                     @Override
@@ -240,9 +215,9 @@ public class FavouriteEventsFragment extends Fragment {
 
     public void CacheData(JSONArray myArray) {  // method to cache data
         ACache mCache = ACache.get(getActivity());
-//        mCache.put("test_key", myArray, 30);
-        mCache.put("test_key", myArray);
-//        mCache.put("test_key3", "test value", 2 * ACache.TIME_DAY);  //2 days
+        mCache.put("tukio_favourite_events", myArray);
+        mSwipyRefreshLayout.setRefreshing(false);
+        reOpenFrag(); // refresh activity
     }
 
 
@@ -272,4 +247,70 @@ public class FavouriteEventsFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewadapter);
     }
 
+    public void reOpenFrag() {
+        Intent pIntent = new Intent(getActivity(), MainActivity.class);
+        startActivityForResult(pIntent, 0);
+
+    }
+    public void CheckFavVenuesCount() {
+        SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String vcount = pref1stRun.getString("count_favourite_venues", "");
+        if (vcount.contentEquals("0")) {
+            noFavourite.setVisibility(View.VISIBLE);  //no favs msg visible
+        } else {
+            showEvents();
+        }
+    }
+
+    public void getFavVenuesCount() {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final String useridd = myPrefs.getString("userId", "");
+        new Thread() {
+            //        @Override
+            public void run() {
+
+                String path = "http://www.tukio.co.ke/applicationfiles/countfavouritevenues.php?userid=" + useridd;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String vresp = bo.toString();
+                            String vresp1 = vresp.trim();
+
+
+                            ShowCountVenues(vresp1);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void ShowCountVenues(String vcount){
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("count_favourite_venues", vcount);
+        editor.apply();
+    }
 }

@@ -505,11 +505,67 @@ public class VenueDetailsActivity extends AppCompatActivity implements BaseSlide
     }
     public void ShowFavSnackBar(String responce){
         if (responce.contentEquals("venue favourited")){
+            GetNewFavVenueCount();
             Snackbar();
         }
         if (responce.contentEquals("exists")){
             Toast.makeText(this, "Venue already exists in favourites.", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+
+    public void GetNewFavVenueCount() {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String useridd = myPrefs.getString("userId", "");
+        new Thread() {
+            //        @Override
+            public void run() {
+
+                String path = "http://www.tukio.co.ke/applicationfiles/countfavouritevenues.php?userid=" + useridd;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String resp = bo.toString();
+                            String resp1 = resp.trim();
+
+
+                            ShowCount(resp1);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void ShowCount(String count) {
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.putString("count_favourite_venues", count);
+        editor.apply();
 
     }
 

@@ -11,6 +11,7 @@
     <string name="route">Route</string>
     <string name="reminder_activity">My events</string>
     <string name="fav_venues">My venues</string>
+    <string name="prof_pic">Profile photo</string>
     <string name="trending">Trending</string>
 
     <string name="trending_bottom">Trending</string>

@@ -1,15 +1,21 @@
 package ke.co.tukio.tukio;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -24,6 +30,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +90,26 @@ public class FavouriteVenuesActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_fav_venues, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.DELETEFavourites) {
+            clearFavs();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void FetchVenuesFromServer(){
         SharedPreferences pref1stRun = PreferenceManager.getDefaultSharedPreferences(this);
         final String uid = pref1stRun.getString("userId", "");
@@ -120,5 +152,101 @@ public class FavouriteVenuesActivity extends AppCompatActivity {
         }
         recyclerViewadapter = new RecyclerViewAdapterFavVen(GetDataAdapter1, FavouriteVenuesActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
+    }
+
+    public void clearFavs(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(FavouriteVenuesActivity.this);
+        alertDialog.setTitle("Remove");
+        alertDialog.setMessage("Delete all venues from favourites?");
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(FavouriteVenuesActivity.this);
+                String uid  = myPrefs.getString("userId", "");
+
+                CheckConnectivity checkNetwork = new CheckConnectivity();
+                if (checkNetwork.isConnected(FavouriteVenuesActivity.this)) {
+                    deleteOnServer(uid);
+                }
+                else
+                {
+                    Snackbar.make(FavouriteVenuesActivity.this  .findViewById(android.R.id.content),
+                            "No internet connection!", Snackbar.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+        alertDialog.show();
+    }
+
+    public void deleteOnServer(final String uid) {
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("deleting...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(true);
+        pDialog.show();
+
+        new Thread() {
+            //        @Override
+            public void run() {
+
+                String path = "http://www.tukio.co.ke/applicationfiles/deleteallfavouritevenues.php?userid=" + uid;
+                URL u = null;
+                try {
+                    u = new URL(path);
+                    HttpURLConnection c = (HttpURLConnection) u.openConnection();
+                    c.setRequestMethod("GET");
+                    c.connect();
+                    InputStream in = c.getInputStream();
+                    final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    in.read(buffer); // Read from Buffer.
+                    bo.write(buffer); // Write Into Buffer.
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            String response = bo.toString();
+                            String response2 = response.trim();
+
+                            pDialog.dismiss();
+                            ToastResults(response2);
+                            try {
+                                bo.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+    public void ToastResults(String resp){
+        if (resp.contentEquals("deleted")){
+            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(FavouriteVenuesActivity.this);
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putString("count_favourite_venues", "0");
+            editor.apply();
+            Intent pIntent = new Intent(getBaseContext(), MainActivity.class);
+            startActivityForResult(pIntent, 0);
+        }
+        else{
+            Toast.makeText(this, "Deletion failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

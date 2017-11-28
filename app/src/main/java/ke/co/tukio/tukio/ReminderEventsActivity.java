@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.cocosw.bottomsheet.BottomSheet;
+//import com.cocosw.bottomsheet.BottomSheet;
 
 import org.afinal.simplecache.ACache;
 import org.json.JSONArray;
@@ -43,7 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ke.co.tukio.tukio.recycler.GetDataAdapter;
-import ke.co.tukio.tukio.recycler.RecyclerViewAdapter;
+import ke.co.tukio.tukio.recycler.RecyclerViewAdapterFavEvents;
+import ke.co.tukio.tukio.util.CheckConnectivity;
 
 public class ReminderEventsActivity extends AppCompatActivity {
 
@@ -55,6 +57,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
 
 //    String GET_JSON_DATA_HTTP_URL = "http://tukio.co.ke/applicationfiles/fetcheventsjson.php";
     String JSON_EVENT_NAME = "event_name";
+    String JSON_EVENT_REM_ID = "event_id";  //the id of the event in the reinder_Events tble
     String JSON_EVENT_DATE = "event_date";
     String JSON_EVENT_DATE2 = "event_date_two";
     String JSON__EVENT_ID = "id";
@@ -150,6 +153,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
             try {
                 json = array.getJSONObject(i);
                 GetDataAdapter2.setevName(json.getString(JSON_EVENT_NAME));
+                GetDataAdapter2.setevRemId(json.getString(JSON_EVENT_REM_ID));
                 GetDataAdapter2.setevVenue(json.getString(JSON_EVENT_VENUE));
                 GetDataAdapter2.setevVenueId(json.getString(JSON_EVENT_VENUE_ID));
                 GetDataAdapter2.setevDate(json.getString(JSON_EVENT_DATE));
@@ -165,7 +169,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
             }
             GetDataAdapter1.add(GetDataAdapter2);
         }
-        recyclerViewadapter = new RecyclerViewAdapter(GetDataAdapter1, ReminderEventsActivity.this);
+        recyclerViewadapter = new RecyclerViewAdapterFavEvents(GetDataAdapter1, ReminderEventsActivity.this);
         recyclerView.setAdapter(recyclerViewadapter);
     }
 
@@ -193,33 +197,34 @@ public class ReminderEventsActivity extends AppCompatActivity {
     }
     public void clearFav(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ReminderEventsActivity.this);
-        alertDialog.setTitle("Clear data");
-        alertDialog.setMessage("Delete your favourite events and venues?");
+        alertDialog.setTitle("Remove");
+        alertDialog.setMessage("Delete all events from favourites?");
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
-        alertDialog.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
 
                 SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(ReminderEventsActivity.this);
                 String uid  = myPrefs.getString("userId", "");
+
+                CheckConnectivity checkNetwork = new CheckConnectivity();
+                if (checkNetwork.isConnected(ReminderEventsActivity.this)) {
                 deleteOnServer(uid);
-                SharedPreferences.Editor editor = myPrefs.edit();
+                }
+                else
+                {
+                    Snackbar.make(ReminderEventsActivity.this  .findViewById(android.R.id.content),
+                            "No internet connection!", Snackbar.LENGTH_LONG).show();
+                }
 
 
-                editor.putString("count_favourite_events", "0");
-                editor.apply();
-                editor.putString("myEvents", "");
-                editor.putString("myVenues", "");
-                editor.apply();
-                ACache mCache = ACache.get(ReminderEventsActivity.this);
-                mCache.put("tukio_favourite_events", "");
-                Toast.makeText(ReminderEventsActivity.this, "Cleared", Toast.LENGTH_SHORT).show();
-                Intent poIntetnt = new Intent(getBaseContext(), MainActivity.class);
-                startActivityForResult(poIntetnt, 0);
+//                Toast.makeText(ReminderEventsActivity.this, "Cleared", Toast.LENGTH_SHORT).show();
+//                Intent poIntetnt = new Intent(getBaseContext(), MainActivity.class);
+//                startActivityForResult(poIntetnt, 0);
             }
         });
 
@@ -228,7 +233,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
     }
 
 
-    public void ShowBottomSheet(){
+   /* public void ShowBottomSheet(){
         new BottomSheet.Builder(ReminderEventsActivity.this)
                 .title("FSD")
                 .sheet(R.menu.list)
@@ -243,22 +248,23 @@ public class ReminderEventsActivity extends AppCompatActivity {
                         }
                     }
                 }).show();
-    }
+    }*/
     public void AccDetails(View v){  //works for clicks from the BS
         Toast.makeText(ReminderEventsActivity.this, "Hello", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteOnServer(final String uid) {
-
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("deleting...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(true);
+        pDialog.show();
 
         new Thread() {
             //        @Override
             public void run() {
 
-
-
-
-                String path = "http://www.tukio.co.ke/applicationfiles/deletefavourites.php?userid=" + uid;
+                String path = "http://www.tukio.co.ke/applicationfiles/deleteallfavouritesevents.php?userid=" + uid;
                 URL u = null;
                 try {
                     u = new URL(path);
@@ -274,7 +280,7 @@ public class ReminderEventsActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            pDialog.dismiss();
                             String response = bo.toString();
                             String response2 = response.trim();
 
@@ -299,6 +305,17 @@ public class ReminderEventsActivity extends AppCompatActivity {
     public void ToastResults(String resp){
         if (resp.contentEquals("deleted")){
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(ReminderEventsActivity.this);
+            SharedPreferences.Editor editor = myPrefs.edit();
+            editor.putString("count_favourite_events", "0");
+            editor.putString("myEvents", "");
+            editor.putString("myVenues", "");
+            editor.apply();
+            ACache mCache = ACache.get(ReminderEventsActivity.this);
+            mCache.put("tukio_favourite_events", "");
+
+            Intent pIntent = new Intent(getBaseContext(), MainActivity.class);
+            startActivityForResult(pIntent, 0);
         }
         else{
             Toast.makeText(this, "Deletion failed", Toast.LENGTH_SHORT).show();

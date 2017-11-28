@@ -9,19 +9,6 @@
     android:paddingTop="3dp"
 
     tools:context="ke.co.tukio.tukio.HomeFragment">
-    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:id="@+id/swipyrefreshlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srl_direction="top">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
-    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
-
     <com.thebrownarrow.customfont.CustomFontTextView
 
         android:id="@+id/noFavTxt"
@@ -31,13 +18,30 @@
         android:gravity="center"
         android:lineSpacingExtra="3dp"
         android:paddingLeft="20dp"
+        android:visibility="gone"
         android:paddingRight="20dp"
         android:paddingTop="50dp"
-        android:text="You've not selected any favourite venues.\nYou can select one from the map"
+        android:text="There are no events from any of your favourite venues.\nSwipe to refresh this page or select more venues from the map."
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        android:visibility="gone"
         app:custom_typeface="@string/font_segoue_bold" />
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/swipyrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srl_direction="top">
+
+
+   <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+    <!--android:text="You've not selected any favourite venues.\nYou can select one from the map"-->
+
     <!-- <com.thebrownarrow.customfont.CustomFontTextView
          app:custom_typeface="@string/font_segoue_bold"
          android:layout_width="match_parent"

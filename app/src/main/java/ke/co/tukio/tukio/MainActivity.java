@@ -26,6 +26,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -237,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         } else Snackbar();
     }
 
-    public void reminders(View v) {
+   /* public void reminders(View v) {
         ConnectivityManager cn = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
         if (nf != null && nf.isConnected() == true) {
@@ -245,10 +246,7 @@ public class MainActivity extends AppCompatActivity {
             Intent pIntent = new Intent(getBaseContext(), ReminderEventsActivity.class);
             startActivityForResult(pIntent, 0);
         } else Snackbar();
-
-//        Toast.makeText(this, "Reminders", Toast.LENGTH_SHORT).show();
-
-    }
+    }*/
 
 
     public void promote(View v) {
@@ -506,7 +504,9 @@ public class MainActivity extends AppCompatActivity {
             checkCache();
         }
         if (dista >= 1.0) {
-            Toast.makeText(this, "You cannot kick this venue until you're inside it.", Toast.LENGTH_SHORT).show();
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "You cannot kick this venue until you're inside it!", Snackbar.LENGTH_LONG).show();
+//            Toast.makeText(this, "You cannot kick this venue until you're inside it.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -514,13 +514,16 @@ public class MainActivity extends AppCompatActivity {
 
         ACache mCache = ACache.get(MainActivity.this);
         String kst = mCache.getAsString("kickstatus");
-        Toast.makeText(this, "Cache: " + kst, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Cache: " + kst, Toast.LENGTH_SHORT).show();
         try {
             if (kst.equals(null)) {
                 CheckNetKick();
             }
             if (kst.contentEquals("placekicked")) {
-                Toast.makeText(this, "You recently kicked this place. Please wait before you can kick again.", Toast.LENGTH_SHORT).show();
+                Snackbar.make(this.findViewById(android.R.id.content),
+                        "You recently kicked this place. Please wait before you can kick again.!", Snackbar.LENGTH_LONG).show();
+
+//                Toast.makeText(this, "You recently kicked this place. Please wait before you can kick again.", Toast.LENGTH_SHORT).show();
 
             }
         } catch (NullPointerException e) {
@@ -810,7 +813,7 @@ public class MainActivity extends AppCompatActivity {
                 fos.write(publicjson.getBytes());
                 fos.close();
 
-                Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Data saved", Toast.LENGTH_LONG).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -880,7 +883,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         JSONArray jsonArray = new JSONArray(jsonValues);
-                        Toast.makeText(MainActivity.this, "No of places: " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "No of places: " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                         list.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -974,8 +977,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View v) {
         AlertDialog.Builder alertadd = new AlertDialog.Builder(MainActivity.this);
-
-//            alertadd.setTitle("Android");
         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
         final View view = factory.inflate(R.layout.custom_dialog_logout, null);
         alertadd.setView(view);
@@ -1004,8 +1005,30 @@ public class MainActivity extends AppCompatActivity {
                 }
 //                END LOGOUT
 
+                //check if profile pic exists
 
                 ACache mCache = ACache.get(MainActivity.this);
+                Bitmap ppBitmap = mCache.getAsBitmap("profile_picture");
+                if (ppBitmap != null) {// profile exists, convert to Base 64 and cache it in Shared pref
+                    Bitmap immage = ppBitmap;
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] b = baos.toByteArray();
+                    String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+                    SharedPreferences BmyPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    SharedPreferences.Editor editor = BmyPrefs.edit();
+                    editor.putString("profile_picture", imageEncoded);
+                    editor.putString("saved_profile_picture", "yes");
+                    editor.apply();
+                    Log.d("Image Log:", imageEncoded);
+//                    return imageEncoded;
+                } else {
+                    //prof doesn't exists. Do nothing
+
+                }
+
+//                ACache mCache = ACache.get(MainActivity.this);
                 mCache.clear();
                 SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 SharedPreferences.Editor editor = myPrefs.edit();
@@ -1030,6 +1053,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(MainActivity.this, "All data cleared.", Toast.LENGTH_SHORT).show();
+
                 Intent ff = new Intent(getBaseContext(), SplashActivity.class);
                 ff.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivityForResult(ff, 0);

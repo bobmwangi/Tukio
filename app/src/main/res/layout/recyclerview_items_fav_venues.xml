@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <!--id wont be visible-->
@@ -20,46 +19,49 @@
         android:layout_gravity="bottom">
 
 
-       <!-- <ImageView
-            android:id="@+id/imgVen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fire_white_venue" />
--->
-
+        <!-- <ImageView
+             android:id="@+id/imgVen"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:adjustViewBounds="true"
+             android:padding="5dp"
+             android:scaleType="fitCenter"
+             android:src="@drawable/fire_white_venue" />
+ -->
 
 
         <com.thebrownarrow.customfont.CustomFontTextView
-            app:custom_typeface="@string/font_segoue_bold"
+
             android:id="@+id/tvVName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
             android:padding="10sp"
             android:paddingTop="15dp"
+
+            android:text="kuzima"
             android:textColor="#43b6f4"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            app:custom_typeface="@string/font_segoue_bold" />
         <!-- <ImageView
              android:layout_gravity="center_vertical"
              android:layout_width="20dp"
              android:src="@drawable/ic_action_date_white"
              android:layout_height="20dp" />-->
-        <TextView
+
+        <com.thebrownarrow.customfont.CustomFontTextView
             android:id="@+id/tvVLoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvVName"
-
-            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:paddingBottom="7dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_toRightOf="@+id/imgVen"
-            android:gravity="center"
+            android:text="Lngata way"
             android:textColor="#000"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:custom_typeface="@string/font_segoue_reg" />
         <!--    <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="20dp"
@@ -69,18 +71,19 @@
         <Space
             android:id="@+id/sp"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="6dp"
             android:layout_below="@+id/tvVLoc" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1sp"
+            android:layout_height="0.5sp"
             android:layout_below="@+id/sp"
-            android:background="#fff" />
+            android:background="#000" />
+
         <Space
             android:id="@+id/sp1"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="6dp"
 
             android:layout_below="@+id/sp" />
     </RelativeLayout>

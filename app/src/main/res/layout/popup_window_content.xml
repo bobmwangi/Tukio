@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#96000000">
+    android:background="#ffffff">
+    <!--android:background="#96000000">-->
     <!--android:background="@drawable/blackbg">-->
 
 
     <com.thebrownarrow.customfont.CustomFontTextView
-        android:id="@+id/green"
+        android:id="@+id/blackk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,6 +17,20 @@
         android:layout_centerVertical="true"
         android:lineSpacingExtra="3dp"
         android:padding="10dp"
+        android:text="Not available"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:custom_typeface="@string/font_segoue_reg" />
+
+    <com.thebrownarrow.customfont.CustomFontTextView
+        android:id="@+id/green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:lineSpacingExtra="3dp"
+        android:padding="10dp"
+        android:layout_below="@+id/blackk"
         android:text="Not kicking"
         android:textColor="@color/notkicking"
         android:textSize="20sp"
@@ -75,7 +90,7 @@
         android:text="Lit"
         android:textColor="@color/lit"
         android:textSize="22sp"
-        app:custom_typeface="@string/font_segoue_bold" />
+        app:custom_typeface="@string/font_segoue_reg" />
 
 
     <!-- <com.thebrownarrow.customfont.CustomFontTextView
